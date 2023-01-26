@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class DualTurretWeapon : Weapon
 {
-    [SerializeField] Transform firstCannon;
 
     public override void Shoot(Vector3 aimPoint)
     {
@@ -18,13 +17,13 @@ public class DualTurretWeapon : Weapon
             GameObject bullet = ProjectilePool.instance.GetProjectilePrefab(projectileData.id);
             if (bullet != null)
             {
-                bullet.transform.SetPositionAndRotation(firstCannon.position, firstCannon.rotation);
+                bullet.transform.SetPositionAndRotation(mainFirePosition.position, mainFirePosition.rotation);
                 Projectile projectileScript = bullet.GetComponent<Projectile>();
                 projectileScript.projectileData = projectileData;
                 projectileScript.timeToRemove = projectileData.lifeCountdown;
 
                 bullet.SetActive(true);
-                bullet.GetComponent<Rigidbody>().velocity = transform.GetComponentInParent<Rigidbody>().velocity + (aimPoint - firstCannon.position).normalized * projectileData.speed + transform.TransformVector(gunSpread);
+                bullet.GetComponent<Rigidbody>().velocity = transform.GetComponentInParent<Rigidbody>().velocity + (aimPoint - mainFirePosition.position).normalized * projectileData.speed + transform.TransformVector(gunSpread);
 
             }
             

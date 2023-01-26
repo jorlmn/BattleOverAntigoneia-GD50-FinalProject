@@ -22,5 +22,6 @@ public class ProjectileSO : ScriptableObject
     public float gunMaxRange;
     public float gunMinRange;
 
+    public int angleToFire = 10;
     public LayerMask isDamageable;
 }

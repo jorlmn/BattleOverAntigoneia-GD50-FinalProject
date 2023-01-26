@@ -23,6 +23,8 @@ public class InputManager : MonoBehaviour
     [Header("Components")]
     [SerializeField] PlayerMovement playerMovement;
 
+    [SerializeField] PlayerWeaponsManager playerWeapons;
+
     void Start()
     {
         horizontalInput = 0f;
@@ -36,6 +38,11 @@ public class InputManager : MonoBehaviour
         if (StateManager.GameState == StateManager.gameStates.playState)
         {   
             PlayStateInputEvents();
+
+            if (StateManager.AimState == StateManager.AimStates.aiming)
+            {
+                AimStateInputEvents();
+            }
         }
 
     }
@@ -84,6 +91,23 @@ public class InputManager : MonoBehaviour
         if (Input.GetKeyDown(Keybindings.keyToggleStealth))
         {
             playerMovement.ToggleStealth();
+        }
+
+        if (Input.GetKeyDown(Keybindings.keyQuickSlot1))
+        {
+            playerWeapons.SelectWeapon(1);
+        }
+        else if (Input.GetKeyDown(Keybindings.keyQuickSlot2))
+        {
+            playerWeapons.SelectWeapon(2);
+        }
+    }
+
+    void AimStateInputEvents()
+    {
+        if (Input.GetKeyDown(Keybindings.keyFireWeapon))
+        {
+            playerWeapons.FireWeapon();
         }
     }
 
