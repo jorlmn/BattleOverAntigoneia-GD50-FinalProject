@@ -14,11 +14,8 @@ public class ProjectileSO : ScriptableObject
     public GameObject projectilePrefab;
 
     [Header("Gun Data")]
-    public int ammoPerMagazine;
     public float defaultInAccuracy;
-    public bool automaticFire;
     public float fireAgainDelay;
-    public float reloadTime;
     public float gunMaxRange;
     public float gunMinRange;
 

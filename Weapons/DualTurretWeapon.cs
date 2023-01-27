@@ -7,7 +7,7 @@ public class DualTurretWeapon : Weapon
 
     public override void Shoot(Vector3 aimPoint)
     {
-        if (!justFired && !justReloaded)
+        if (!justFired)
         {
             Vector3 gunSpread = new();
             gunSpread.x = Random.Range(-(projectileData.defaultInAccuracy), projectileData.defaultInAccuracy);
@@ -31,11 +31,11 @@ public class DualTurretWeapon : Weapon
             firingCoolDown = projectileData.fireAgainDelay;
             StartCoroutine(ResetFiringCoolDown());
         }
-        else if (justFired && projectileQuantity > 0 && !justReloaded)
+        else if (justFired)
         {
             //Debug.Log("The Weapon is cooling down");
         }
-        else if (!justFired && projectileQuantity > 0 && justReloaded)
+        else if (!justFired)
         {
             //Debug.Log("The weapon is reloading");
         }

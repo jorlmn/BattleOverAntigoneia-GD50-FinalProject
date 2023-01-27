@@ -6,16 +6,14 @@ public abstract class Weapon : MonoBehaviour
 {
     [Header("Projectile")]
     public ProjectileSO projectileData;
-    public int projectileQuantity;
 
     [Header("Firing")]
     public bool justFired = false;
     public float firingCoolDown;
-    public bool justReloaded = false;
-    public float reloadCoolDown;
 
-    [Header("Turret Data")]
-    public TurretDataSO turretData;
+    [Header("Weapon Data")]
+    public WeaponDataSO weaponData;
+    public bool active = true;
 
     public Transform mainFirePosition;
 

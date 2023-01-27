@@ -6,7 +6,6 @@ public class PlayerWeaponsManager : MonoBehaviour
 {
     PlayerTarget target = null;
     ShipSystemsManager shipSystems = null;
-    public int selectedWeaponIndex = 1;
     public List<Weapon> selectedWeapons = new();
 
     void Start()
@@ -14,8 +13,6 @@ public class PlayerWeaponsManager : MonoBehaviour
         target = GetComponent<PlayerTarget>();
 
         shipSystems = GetComponent<ShipSystemsManager>();
-
-        SelectWeapon(1);
     }
 
     void Update()
@@ -37,7 +34,7 @@ public class PlayerWeaponsManager : MonoBehaviour
         {
             foreach(Weapon weapon in shipSystems.weaponsByType[weaponIndex])
             {
-                if (weapon.turretData.active)
+                if (weapon.active)
                 {
                     selectedWeapons.Add(weapon);
                 }

@@ -8,13 +8,13 @@ public static class WeaponExtensions
     {
         // X rotation
 
-        Quaternion mainXRotation = Quaternion.RotateTowards(weapon.sideWaysPivot.rotation, Quaternion.LookRotation(hitPoint - weapon.sideWaysPivot.position), weapon.turretData.rotationSpeed * Time.deltaTime);
+        Quaternion mainXRotation = Quaternion.RotateTowards(weapon.sideWaysPivot.rotation, Quaternion.LookRotation(hitPoint - weapon.sideWaysPivot.position), weapon.weaponData.rotationSpeed * Time.deltaTime);
         Vector3 sideWaysEulerAngles = mainXRotation.eulerAngles;
 
         sideWaysEulerAngles.x = weapon.sideWaysPivot.rotation.x;
         sideWaysEulerAngles.z = weapon.sideWaysPivot.rotation.z;
 
-        if (!weapon.turretData.is360Turret)
+        if (!weapon.weaponData.is360Turret)
         {
             sideWaysEulerAngles.y = (sideWaysEulerAngles.y > 180) ? sideWaysEulerAngles.y - 360 : sideWaysEulerAngles.y;
 
@@ -24,7 +24,7 @@ public static class WeaponExtensions
             newYEulerAngles.x = 0;
             newYEulerAngles.z = 0;
             newYEulerAngles.y = (newYEulerAngles.y > 180) ? newYEulerAngles.y - 360 : newYEulerAngles.y;
-            newYEulerAngles.y = Mathf.Clamp(newYEulerAngles.y, -weapon.turretData.sidewaysAngleLimit, weapon.turretData.sidewaysAngleLimit);
+            newYEulerAngles.y = Mathf.Clamp(newYEulerAngles.y, -weapon.weaponData.sidewaysAngleLimit, weapon.weaponData.sidewaysAngleLimit);
             weapon.sideWaysPivot.localRotation = Quaternion.Euler(newYEulerAngles);
         }
         else
@@ -33,7 +33,7 @@ public static class WeaponExtensions
         }
 
         // Y rotation
-        Quaternion mainYRotation = Quaternion.RotateTowards(weapon.upAndDownPivot.rotation, Quaternion.LookRotation(hitPoint - weapon.upAndDownPivot.position), weapon.turretData.rotationSpeed * Time.deltaTime);
+        Quaternion mainYRotation = Quaternion.RotateTowards(weapon.upAndDownPivot.rotation, Quaternion.LookRotation(hitPoint - weapon.upAndDownPivot.position), weapon.weaponData.rotationSpeed * Time.deltaTime);
         Vector3 upAndDownRotation = mainYRotation.eulerAngles;
 
         upAndDownRotation.y = weapon.upAndDownPivot.rotation.y;
@@ -47,7 +47,7 @@ public static class WeaponExtensions
         newXEulerAngles.y = 0;
         newXEulerAngles.z = 0;
         newXEulerAngles.x = (newXEulerAngles.x > 180) ? newXEulerAngles.x - 360 : newXEulerAngles.x;
-        newXEulerAngles.x = Mathf.Clamp(newXEulerAngles.x, weapon.turretData.upwardsAngleLimit, weapon.turretData.downwardsAngleLimit);
+        newXEulerAngles.x = Mathf.Clamp(newXEulerAngles.x, weapon.weaponData.upwardsAngleLimit, weapon.weaponData.downwardsAngleLimit);
         weapon.upAndDownPivot.localRotation = Quaternion.Euler(newXEulerAngles);
     }
 

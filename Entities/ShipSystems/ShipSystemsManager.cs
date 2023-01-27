@@ -5,22 +5,24 @@ using UnityEngine;
 public class ShipSystemsManager : MonoBehaviour
 {
     public ShipDataSO shipData;
-    public float currentHealth;
     [SerializeField] Weapon[] weaponsList;
     public Dictionary<int, List<Weapon>> weaponsByType = new();
 
+    private ShipHullHealth shipHealth;
     void Start()
     {
-        currentHealth = shipData.maxHealth;
+        shipHealth = GetComponent<ShipHullHealth>();
+        shipHealth.maxHullHealth = shipData.maxHealth;
+        shipHealth.currentHullHealth = shipData.maxHealth;
 
         foreach (Weapon weapon in weaponsList)
         {
-            if (!weaponsByType.ContainsKey(weapon.turretData.turretType))
+            if (!weaponsByType.ContainsKey(weapon.weaponData.weaponType))
             {
-                weaponsByType.Add(weapon.GetComponent<Weapon>().turretData.turretType, new List<Weapon>());
+                weaponsByType.Add(weapon.GetComponent<Weapon>().weaponData.weaponType, new List<Weapon>());
             }
 
-            weaponsByType[weapon.turretData.turretType].Add(weapon);
+            weaponsByType[weapon.weaponData.weaponType].Add(weapon);
         }
     }
 }
