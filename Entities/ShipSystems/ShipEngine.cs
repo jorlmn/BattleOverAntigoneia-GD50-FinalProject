@@ -24,9 +24,5 @@ public class ShipEngine : MonoBehaviour
         shipVelocities["turbo"] = Mathf.Lerp(1, shipData.turboVelocity, healthPercentage);
         shipVelocities["stealth"] = Mathf.Lerp(1, shipData.stealthVelocity, healthPercentage);
         shipVelocities["rotation"] = Mathf.Lerp(1, shipData.rotationSpeed, healthPercentage);
-
-        Debug.Log(shipVelocities["standard"]);
-
-        Debug.Log(shipVelocities[currentVelocity]);
     }
 }

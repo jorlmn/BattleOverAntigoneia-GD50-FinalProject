@@ -27,6 +27,11 @@ public class BulletProjectile : Projectile
             {
                     shipPart.TakeDamage(projectileData.damage);
             }
+
+            ParticleSystem particleEffect = ParticlePool.instance.GetParticleSystem(projectileData.standardDamageParticle);
+            particleEffect.transform.position = hit.point;
+            particleEffect.gameObject.SetActive(true);
+
             timeToRemove = projectileData.lifeCountdown;
             gameObject.SetActive(false);
         }

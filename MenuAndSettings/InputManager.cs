@@ -101,6 +101,10 @@ public class InputManager : MonoBehaviour
         {
             playerWeapons.SelectWeapon(2);
         }
+        else if (Input.GetKeyDown(Keybindings.keyQuickSlot3))
+        {
+            playerWeapons.SelectWeapon(3);
+        }
     }
 
     void AimStateInputEvents()

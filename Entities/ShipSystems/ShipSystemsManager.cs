@@ -8,12 +8,12 @@ public class ShipSystemsManager : MonoBehaviour
     [SerializeField] Weapon[] weaponsList;
     public Dictionary<int, List<Weapon>> weaponsByType = new();
 
-    [HideInInspector] public ShipHullHealth shipHealth;
+    [HideInInspector] public HullHealth shipHealth;
     [HideInInspector] public ShipEngine shipEngine;
 
     void Awake()
     {
-        shipHealth = GetComponent<ShipHullHealth>();
+        shipHealth = GetComponent<HullHealth>();
         shipHealth.maxHullHealth = shipData.maxHullHealth;
         shipHealth.currentHullHealth = shipData.maxHullHealth;
 

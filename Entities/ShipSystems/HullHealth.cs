@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShipHullHealth : Health
+public class HullHealth : Health
 {
     public float maxHullHealth;
 

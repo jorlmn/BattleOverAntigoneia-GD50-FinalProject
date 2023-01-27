@@ -6,13 +6,13 @@ public class WeaponHealth : Health
 {
     private float maxWeaponHealth;
     private float currentWeaponHealth;
-    private ShipHullHealth shipHull;
+    private HullHealth shipHull;
     private Weapon weapon;
 
     void Start()
     {
         weapon = GetComponent<Weapon>();
-        shipHull = GetComponentInParent<ShipHullHealth>();
+        shipHull = GetComponentInParent<HullHealth>();
         maxWeaponHealth = weapon.weaponData.maxHealth;
         currentWeaponHealth = maxWeaponHealth;
     }
