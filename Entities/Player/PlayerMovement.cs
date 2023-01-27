@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public ShipDataSO shipData;
-    public float currentVelocity = 20f;
+    private ShipEngine shipEngine;
     private Vector2 playerVelocity;
     private Rigidbody rb;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        rb.freezeRotation = true;
+        shipEngine = GetComponent<ShipEngine>();
 
-        currentVelocity = shipData.standardVelocity;
+        rb.freezeRotation = true;
     }
 
     void Update()
@@ -35,18 +34,18 @@ public class PlayerMovement : MonoBehaviour
 
     void MovePlayerShip()
     {
-        rb.AddTorque(transform.up * shipData.rotationSpeed * playerVelocity.x, ForceMode.Acceleration);
+        rb.AddTorque(transform.up * shipEngine.shipVelocities["rotation"] * playerVelocity.x, ForceMode.Acceleration);
 
-        rb.AddForce(transform.forward * currentVelocity * playerVelocity.y, ForceMode.Acceleration);
+        rb.AddForce(transform.forward * shipEngine.shipVelocities[shipEngine.currentVelocity] * playerVelocity.y, ForceMode.Acceleration);
     }
 
     public void ToggleTurbo()
     {
-        currentVelocity = currentVelocity == shipData.turboVelocity ? shipData.standardVelocity : shipData.turboVelocity;
+        shipEngine.currentVelocity = shipEngine.shipVelocities[shipEngine.currentVelocity] == shipEngine.shipVelocities["turbo"] ? "standard" : "turbo";
     }
 
     public void ToggleStealth()
     {
-        currentVelocity = currentVelocity == shipData.stealthVelocity ? shipData.standardVelocity : shipData.stealthVelocity;
+        shipEngine.currentVelocity = shipEngine.shipVelocities[shipEngine.currentVelocity] == shipEngine.shipVelocities["stealth"] ? "standard" : "stealth";
     }
 }

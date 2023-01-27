@@ -8,13 +8,20 @@ public class ShipSystemsManager : MonoBehaviour
     [SerializeField] Weapon[] weaponsList;
     public Dictionary<int, List<Weapon>> weaponsByType = new();
 
-    private ShipHullHealth shipHealth;
-    void Start()
+    [HideInInspector] public ShipHullHealth shipHealth;
+    [HideInInspector] public ShipEngine shipEngine;
+
+    void Awake()
     {
         shipHealth = GetComponent<ShipHullHealth>();
-        shipHealth.maxHullHealth = shipData.maxHealth;
-        shipHealth.currentHullHealth = shipData.maxHealth;
+        shipHealth.maxHullHealth = shipData.maxHullHealth;
+        shipHealth.currentHullHealth = shipData.maxHullHealth;
 
+        shipEngine = GetComponent<ShipEngine>();
+        shipEngine.shipData = shipData;
+    }
+    void Start()
+    {
         foreach (Weapon weapon in weaponsList)
         {
             if (!weaponsByType.ContainsKey(weapon.weaponData.weaponType))

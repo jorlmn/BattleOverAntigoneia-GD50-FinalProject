@@ -21,9 +21,6 @@ public class WeaponHealth : Health
     {
         currentWeaponHealth -= damage;
 
-        Debug.Log("Turret took damage " + damage);
-
-
         shipHull.TakeDamage((damage / 4) + (currentWeaponHealth < 0 ? Mathf.Abs(currentWeaponHealth) : 0));
 
         currentWeaponHealth = Mathf.Clamp(currentWeaponHealth, 0, maxWeaponHealth);

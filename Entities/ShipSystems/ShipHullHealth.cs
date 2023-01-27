@@ -14,8 +14,6 @@ public class ShipHullHealth : Health
 
         currentHullHealth = Mathf.Clamp(currentHullHealth, 0, maxHullHealth);
 
-        Debug.Log("Hull took damage " + damage);
-
         if (currentHullHealth <= 0)
         {
             //OnDeath(this, EventArgs.Empty);

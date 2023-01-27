@@ -4,15 +4,29 @@ using UnityEngine;
 
 public class ShipEngine : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [HideInInspector] public ShipDataSO shipData;
+
+    public string currentVelocity;
+    public Dictionary<string, float> shipVelocities = new ();
     void Start()
     {
-        
+        shipVelocities["standard"] = shipData.standardVelocity;
+        shipVelocities["turbo"] = shipData.turboVelocity;
+        shipVelocities["stealth"] = shipData.stealthVelocity;
+        shipVelocities["rotation"] = shipData.rotationSpeed;
+
+        currentVelocity = "standard";
     }
 
-    // Update is called once per frame
-    void Update()
+    public void EngineSpeedAdjustment(float healthPercentage)
     {
-        
+        shipVelocities["standard"] = Mathf.Lerp(1, shipData.standardVelocity, healthPercentage);
+        shipVelocities["turbo"] = Mathf.Lerp(1, shipData.turboVelocity, healthPercentage);
+        shipVelocities["stealth"] = Mathf.Lerp(1, shipData.stealthVelocity, healthPercentage);
+        shipVelocities["rotation"] = Mathf.Lerp(1, shipData.rotationSpeed, healthPercentage);
+
+        Debug.Log(shipVelocities["standard"]);
+
+        Debug.Log(shipVelocities[currentVelocity]);
     }
 }
