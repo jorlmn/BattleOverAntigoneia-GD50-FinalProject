@@ -23,14 +23,24 @@ public class BulletProjectile : Projectile
     {
         if (Physics.Raycast(new Ray(previousPosition, (transform.position - previousPosition).normalized), out RaycastHit hit, (transform.position - previousPosition).magnitude, projectileData.isDamageable, QueryTriggerInteraction.Collide))
         {
+            bool hitHull = false;
             if (hit.transform.gameObject.TryGetComponent<Health>(out Health shipPart))
             {
-                    shipPart.TakeDamage(projectileData.damage);
+                    hitHull = shipPart.TakeDamage(projectileData.damage);
             }
 
-            ParticleSystem particleEffect = ParticlePool.instance.GetParticleSystem(projectileData.standardDamageParticle);
-            particleEffect.transform.position = hit.point;
-            particleEffect.gameObject.SetActive(true);
+            if (hitHull == true)
+            {
+                ParticleSystem explosionParticle = ParticlePool.instance.GetParticleSystem(projectileData.standardDamageParticle);
+                explosionParticle.transform.position = hit.point;
+                explosionParticle.gameObject.SetActive(true);
+            }
+            else
+            {
+                ParticleSystem shieldParticle = ParticlePool.instance.GetParticleSystem(projectileData.shieldParticle);
+                shieldParticle.transform.position = hit.point;
+                shieldParticle.gameObject.SetActive(true);
+            }
 
             timeToRemove = projectileData.lifeCountdown;
             gameObject.SetActive(false);

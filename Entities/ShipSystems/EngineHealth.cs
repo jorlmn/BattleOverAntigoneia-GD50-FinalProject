@@ -17,17 +17,22 @@ public class EngineHealth : Health
         currentEngineHealth = maxEngineHealth;
     }
 
-    public override void TakeDamage(float damage)
+    public override bool TakeDamage(float damage)
     {
-        currentEngineHealth -= damage;
+        bool hitHull = shipSystems.shipHealth.TakeDamage((damage / 4) + (currentEngineHealth - damage < 0 ? Mathf.Abs(currentEngineHealth - damage) : 0));
 
-        shipSystems.shipHealth.TakeDamage((damage / 4) + (currentEngineHealth < 0 ? Mathf.Abs(currentEngineHealth) : 0));
+        if (hitHull == true)
+        {
+            currentEngineHealth -= damage;
 
-        currentEngineHealth = Mathf.Clamp(currentEngineHealth, 0, maxEngineHealth);
+            currentEngineHealth = Mathf.Clamp(currentEngineHealth, 0, currentEngineHealth);
 
-        shipSystems.shipEngine.EngineSpeedAdjustment(currentEngineHealth / maxEngineHealth);
+            shipSystems.shipEngine.EngineSpeedAdjustment(currentEngineHealth / maxEngineHealth);
 
-        EnableDisableEngineParts(currentEngineHealth / maxEngineHealth);
+            EnableDisableEngineParts(currentEngineHealth / maxEngineHealth);
+        }
+
+        return hitHull;
     }
 
     public override void Repair(float repairPoints)

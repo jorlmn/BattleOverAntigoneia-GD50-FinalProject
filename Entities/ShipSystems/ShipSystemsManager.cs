@@ -10,6 +10,7 @@ public class ShipSystemsManager : MonoBehaviour
 
     [HideInInspector] public HullHealth shipHealth;
     [HideInInspector] public ShipEngine shipEngine;
+    [HideInInspector] public ShipShield shipShield;
 
     void Awake()
     {
@@ -19,6 +20,13 @@ public class ShipSystemsManager : MonoBehaviour
 
         shipEngine = GetComponent<ShipEngine>();
         shipEngine.shipData = shipData;
+
+        if (TryGetComponent<ShipShield>(out shipShield))
+        {
+            shipShield.maxShield = shipData.maxShield;
+            shipShield.currentShield = shipData.maxShield;
+            shipHealth.shipShield = shipShield;
+        }
     }
     void Start()
     {

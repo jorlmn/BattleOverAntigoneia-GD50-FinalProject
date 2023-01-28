@@ -17,18 +17,24 @@ public class WeaponHealth : Health
         currentWeaponHealth = maxWeaponHealth;
     }
 
-    public override void TakeDamage(float damage)
+    public override bool TakeDamage(float damage)
     {
-        currentWeaponHealth -= damage;
 
-        shipHull.TakeDamage((damage / 4) + (currentWeaponHealth < 0 ? Mathf.Abs(currentWeaponHealth) : 0));
+        bool hitHull = shipHull.TakeDamage((damage / 4) + (currentWeaponHealth - damage < 0 ? Mathf.Abs(currentWeaponHealth - damage) : 0));
 
-        currentWeaponHealth = Mathf.Clamp(currentWeaponHealth, 0, maxWeaponHealth);
-
-        if (currentWeaponHealth <= 0)
+        if (hitHull == true)
         {
-            weapon.active = false;
+            currentWeaponHealth -= damage;
+
+            currentWeaponHealth = Mathf.Clamp(currentWeaponHealth, 0, maxWeaponHealth);
+
+            if (currentWeaponHealth <= 0)
+            {
+                weapon.active = false;
+            }
         }
+
+        return hitHull;
     }
 
     public override void Repair(float repairPoints)

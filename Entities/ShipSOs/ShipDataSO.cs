@@ -13,8 +13,8 @@ public class ShipDataSO : ScriptableObject
 
     [Header("Ship Stats")]
     public int maxHullHealth;
-
     public int maxEngineHealth;
+    public int maxShield;
 
     public int maxRearSpeed;
     public int standardVelocity;

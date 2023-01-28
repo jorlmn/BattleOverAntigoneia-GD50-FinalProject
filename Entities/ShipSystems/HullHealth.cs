@@ -8,15 +8,42 @@ public class HullHealth : Health
 
     public float currentHullHealth;
 
-    public override void TakeDamage(float damage)
+    public ShipShield shipShield = null;
+
+    public override bool TakeDamage(float damage)
     {
-        currentHullHealth -= damage;
-
-        currentHullHealth = Mathf.Clamp(currentHullHealth, 0, maxHullHealth);
-
-        if (currentHullHealth <= 0)
+        if (shipShield == null)
         {
-            //OnDeath(this, EventArgs.Empty);
+            currentHullHealth += damage;
+
+            currentHullHealth = Mathf.Clamp(currentHullHealth, 0, maxHullHealth);
+
+            if (currentHullHealth <= 0)
+            {
+                //OnDeath(this, EventArgs.Empty);
+            }
+            return true;
+
+        }
+        else
+        {
+            shipShield.currentShield -= damage;
+
+            if (shipShield.currentShield <= 0)
+            {
+                currentHullHealth += shipShield.currentShield;
+
+                currentHullHealth = Mathf.Clamp(currentHullHealth, 0, maxHullHealth);
+
+                shipShield.currentShield = 0;
+
+                if (currentHullHealth <= 0)
+                {
+                    //OnDeath(this, EventArgs.Empty);
+                }
+                return true;
+            }
+            return false;
         }
     }
 
