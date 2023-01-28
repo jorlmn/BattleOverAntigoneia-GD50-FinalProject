@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class ShipShield : MonoBehaviour
 {
-    public float maxShield;
-    public float currentShield;
-    public float shieldRecoveryRate;
+    public ShipDataSO shipData;
 
     public bool overloadRecharge = false;
     private bool standardRecharge = false;
+
+    public float currentShield;
+
+    void Start()
+    {
+        currentShield = shipData.maxShield;
+    }
 
     public void ShieldOverload()
     {
@@ -32,26 +37,26 @@ public class ShipShield : MonoBehaviour
 
     IEnumerator OverloadRecovery()
     {
-        while (currentShield < maxShield)
+        while (currentShield < shipData.maxShield)
         {
-            currentShield += shieldRecoveryRate;
+            currentShield += shipData.shieldRecoveryRate;
             yield return new WaitForSeconds(1);
         }
 
-        currentShield = Mathf.Clamp(currentShield, 0, maxShield);
+        currentShield = Mathf.Clamp(currentShield, 0, shipData.maxShield);
         overloadRecharge = false;
         yield break;
     }
 
     IEnumerator StandardRecovery()
     {
-        while (currentShield < maxShield)
+        while (currentShield < shipData.maxShield)
         {
-            currentShield += shieldRecoveryRate;
+            currentShield += shipData.shieldRecoveryRate;
             yield return new WaitForSeconds(1);
         }
 
-        currentShield = Mathf.Clamp(currentShield, 0, maxShield);
+        currentShield = Mathf.Clamp(currentShield, 0, shipData.maxShield);
         standardRecharge = false;
         yield break;
     }

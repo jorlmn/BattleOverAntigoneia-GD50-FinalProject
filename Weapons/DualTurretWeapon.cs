@@ -5,6 +5,10 @@ using UnityEngine;
 public class DualTurretWeapon : Weapon
 {
 
+    void Start()
+    {
+        source = GetComponentInParent<ShipSystemsManager>().transform;
+    }
     public override void Shoot(Vector3 aimPoint)
     {
         if (!justFired)

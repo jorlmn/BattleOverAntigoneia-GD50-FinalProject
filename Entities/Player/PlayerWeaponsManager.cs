@@ -46,7 +46,7 @@ public class PlayerWeaponsManager : MonoBehaviour
     {
         foreach(Weapon weapon in selectedWeapons)
         {
-            if (weapon.WithinAngleToFire(target.aimPoint) && weapon.WithinDistanceToFire(target.aimPoint))
+            if (weapon.WithinAngleToFire(target.aimPoint) && weapon.WithinDistanceToFire(target.aimPoint) && weapon.NotHittingSource(target.aimPoint))
             {
                 weapon.Shoot(target.aimPoint);
             }

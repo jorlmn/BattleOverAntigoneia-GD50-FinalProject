@@ -9,17 +9,10 @@ public class ShipEngine : MonoBehaviour
     public string currentVelocity;
     public Dictionary<string, float> shipVelocities = new ();
 
-
-    private float turboRecoveryRate;
-    private float turboSpendRate;
-    private int maxTurbo = 100;
     public float currentTurbo = 100;
     private bool overloadRecharge = false;
     void Start()
     {
-        turboRecoveryRate = shipData.turboRecoveryRate;
-        turboSpendRate = shipData.turboSpendRate;
-
         shipVelocities["standard"] = shipData.standardVelocity;
         shipVelocities["turbo"] = shipData.turboVelocity;
         shipVelocities["stealth"] = shipData.stealthVelocity;
@@ -79,26 +72,26 @@ public class ShipEngine : MonoBehaviour
 
     IEnumerator TurboOverloadRecovery()
     {
-        while (currentTurbo < maxTurbo)
+        while (currentTurbo < shipData.maxTurbo)
         {
-            currentTurbo += turboRecoveryRate;
+            currentTurbo += shipData.turboRecoveryRate;
             yield return new WaitForSeconds(1);
         }
 
-        currentTurbo = Mathf.Clamp(currentTurbo, 0, maxTurbo);
+        currentTurbo = Mathf.Clamp(currentTurbo, 0, shipData.maxTurbo);
         overloadRecharge = false;
         yield break;
     }
 
     IEnumerator TurboStandardRecovery()
     {
-        while (currentTurbo < maxTurbo)
+        while (currentTurbo < shipData.maxTurbo)
         {
-            currentTurbo += turboRecoveryRate;
+            currentTurbo += shipData.turboRecoveryRate;
             yield return new WaitForSeconds(1);
         }
 
-        currentTurbo = Mathf.Clamp(currentTurbo, 0, maxTurbo);
+        currentTurbo = Mathf.Clamp(currentTurbo, 0, shipData.maxTurbo);
         yield break;
     }
 
@@ -106,11 +99,11 @@ public class ShipEngine : MonoBehaviour
     {
         while (currentTurbo > 0)
         {
-            currentTurbo -= turboSpendRate;
+            currentTurbo -= shipData.turboSpendRate;
             yield return new WaitForSeconds(1);
         }
 
-        currentTurbo = Mathf.Clamp(currentTurbo, 0, maxTurbo);
+        currentTurbo = Mathf.Clamp(currentTurbo, 0, shipData.maxTurbo);
         TurboOverload();
         yield break;
     }

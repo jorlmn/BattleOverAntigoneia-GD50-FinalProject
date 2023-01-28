@@ -70,4 +70,28 @@ public static class WeaponExtensions
 
         return false;
     }
+
+    public static bool NotHittingSource(this Weapon weapon, Vector3 targetPosition)
+    {
+        if (Physics.Raycast(new Ray(weapon.mainFirePosition.position, (targetPosition - weapon.mainFirePosition.position).normalized), out RaycastHit hit, weapon.projectileData.gunMaxRange, weapon.projectileData.isDamageable, QueryTriggerInteraction.Collide))
+        {
+            if (hit.transform == weapon.source)
+            {
+                Debug.Log("hitting source " + weapon.source);
+                return false;
+
+            }
+            else if (hit.transform.TryGetComponent<Weapon>(out Weapon hitWeapon))
+            {
+                if (hitWeapon.source == weapon.source)
+                {
+                    Debug.Log("hitting weapon source " + weapon.source);
+                    return false;
+                }
+            }
+        }
+
+        Debug.Log("not hitting source");
+        return true;
+    }
 }

@@ -23,9 +23,7 @@ public class ShipSystemsManager : MonoBehaviour
 
         if (TryGetComponent<ShipShield>(out shipShield))
         {
-            shipShield.maxShield = shipData.maxShield;
-            shipShield.currentShield = shipData.maxShield;
-            shipShield.shieldRecoveryRate = shipData.shieldRecoveryRate;
+            shipShield.shipData = shipData;
             
             shipHealth.shipShield = shipShield;
         }

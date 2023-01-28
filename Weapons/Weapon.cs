@@ -10,13 +10,13 @@ public abstract class Weapon : MonoBehaviour
     [Header("Firing")]
     public bool justFired = false;
     public float firingCoolDown;
+    public Transform source;
 
     [Header("Weapon Data")]
     public WeaponDataSO weaponData;
     public bool active = true;
 
     public Transform mainFirePosition;
-
     public Transform sideWaysPivot;
     public Transform upAndDownPivot;
 
