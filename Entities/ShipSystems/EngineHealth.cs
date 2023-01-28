@@ -35,7 +35,7 @@ public class EngineHealth : Health
 
             shipSystems.shipEngine.EngineSpeedAdjustment(currentEngineHealth / maxEngineHealth);
 
-            EnableDisableEngineParts(currentEngineHealth / maxEngineHealth);
+            DisableEngineParts(currentEngineHealth / maxEngineHealth);
         }
 
         return hitHull;
@@ -47,11 +47,9 @@ public class EngineHealth : Health
         currentEngineHealth = Mathf.Clamp(currentEngineHealth, 0, maxEngineHealth);
 
         shipSystems.shipEngine.EngineSpeedAdjustment(currentEngineHealth / maxEngineHealth);
-
-        EnableDisableEngineParts(currentEngineHealth / maxEngineHealth);
     }
 
-    void EnableDisableEngineParts(float healthPercentage)
+    void DisableEngineParts(float healthPercentage)
     {
         switch (healthPercentage)
         {

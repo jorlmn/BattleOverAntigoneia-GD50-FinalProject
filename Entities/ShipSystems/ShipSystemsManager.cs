@@ -25,6 +25,8 @@ public class ShipSystemsManager : MonoBehaviour
         {
             shipShield.maxShield = shipData.maxShield;
             shipShield.currentShield = shipData.maxShield;
+            shipShield.shieldRecoveryRate = shipData.shieldRecoveryRate;
+            
             shipHealth.shipShield = shipShield;
         }
     }

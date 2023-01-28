@@ -15,6 +15,7 @@ public class ShipDataSO : ScriptableObject
     public int maxHullHealth;
     public int maxEngineHealth;
     public int maxShield;
+    public float shieldRecoveryRate;
 
     public int maxRearSpeed;
     public int standardVelocity;

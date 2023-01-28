@@ -12,7 +12,7 @@ public class HullHealth : Health
 
     public override bool TakeDamage(float damage)
     {
-        if (shipShield == null)
+        if (shipShield == null || shipShield.overloadRecharge)
         {
             currentHullHealth -= damage;
 
@@ -37,11 +37,17 @@ public class HullHealth : Health
 
                 shipShield.currentShield = 0;
 
+                shipShield.ShieldOverload();
+
                 if (currentHullHealth <= 0)
                 {
                     //OnDeath(this, EventArgs.Empty);
                 }
                 return true;
+            }
+            else
+            {
+                shipShield.CheckForShieldRecharge();
             }
             return false;
         }
