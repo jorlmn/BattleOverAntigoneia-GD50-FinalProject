@@ -5,12 +5,20 @@ using UnityEngine;
 public class ShipEngine : MonoBehaviour
 {
     [HideInInspector] public ShipDataSO shipData;
+    [HideInInspector] public Rigidbody shipRb;
 
+    [Header("Engine Speed")]
     public string currentVelocity;
     public Dictionary<string, float> shipVelocities = new ();
 
     public float currentTurbo = 100;
     private bool overloadRecharge = false;
+
+
+    [Header("Engine Sound")]
+    public float minEngineAudioPitch = 0.05f;
+    public float maxEnginePitch = 1;
+    public AudioSource engineAudio;
     void Start()
     {
         shipVelocities["standard"] = shipData.standardVelocity;
@@ -19,14 +27,21 @@ public class ShipEngine : MonoBehaviour
         shipVelocities["rotation"] = shipData.rotationSpeed;
 
         currentVelocity = "standard";
+
+        engineAudio.pitch = minEngineAudioPitch;
+    }
+
+    void Update()
+    {
+        engineAudio.pitch = Mathf.Lerp(minEngineAudioPitch, maxEnginePitch, shipRb.velocity.magnitude / shipData.turboVelocity);
     }
 
     public void EngineSpeedAdjustment(float healthPercentage)
     {
-        shipVelocities["standard"] = Mathf.Lerp(1, shipData.standardVelocity, healthPercentage);
-        shipVelocities["turbo"] = Mathf.Lerp(1, shipData.turboVelocity, healthPercentage);
-        shipVelocities["stealth"] = Mathf.Lerp(1, shipData.stealthVelocity, healthPercentage);
-        shipVelocities["rotation"] = Mathf.Lerp(1, shipData.rotationSpeed, healthPercentage);
+        shipVelocities["standard"] = Mathf.Lerp(shipData.stealthVelocity / 2, shipData.standardVelocity, healthPercentage);
+        shipVelocities["turbo"] = Mathf.Lerp(shipData.stealthVelocity / 2, shipData.turboVelocity, healthPercentage);
+        shipVelocities["stealth"] = Mathf.Lerp(shipData.stealthVelocity / 2, shipData.stealthVelocity, healthPercentage);
+        shipVelocities["rotation"] = Mathf.Lerp(shipData.stealthVelocity / 2, shipData.rotationSpeed, healthPercentage);
     }
 
     public void ToggleTurbo()
@@ -107,5 +122,4 @@ public class ShipEngine : MonoBehaviour
         TurboOverload();
         yield break;
     }
-
 }

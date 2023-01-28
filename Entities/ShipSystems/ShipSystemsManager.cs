@@ -20,6 +20,7 @@ public class ShipSystemsManager : MonoBehaviour
 
         shipEngine = GetComponent<ShipEngine>();
         shipEngine.shipData = shipData;
+        shipEngine.shipRb = GetComponent<Rigidbody>();
 
         if (TryGetComponent<ShipShield>(out shipShield))
         {

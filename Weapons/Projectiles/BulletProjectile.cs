@@ -27,19 +27,25 @@ public class BulletProjectile : Projectile
             if (hit.transform.gameObject.TryGetComponent<Health>(out Health shipPart))
             {
                     hitHull = shipPart.TakeDamage(projectileData.damage);
-            }
 
-            if (hitHull == true)
+                if (hitHull == true)
+                {
+                    ParticleSystem explosionParticle = ParticlePool.instance.GetParticleSystem(projectileData.standardDamageParticle);
+                    explosionParticle.transform.position = hit.point;
+                    explosionParticle.gameObject.SetActive(true);
+                }
+                else
+                {
+                    ParticleSystem shieldParticle = ParticlePool.instance.GetParticleSystem(projectileData.shieldParticle);
+                    shieldParticle.transform.position = hit.point;
+                    shieldParticle.gameObject.SetActive(true);
+                }
+            }
+            else
             {
                 ParticleSystem explosionParticle = ParticlePool.instance.GetParticleSystem(projectileData.standardDamageParticle);
                 explosionParticle.transform.position = hit.point;
                 explosionParticle.gameObject.SetActive(true);
-            }
-            else
-            {
-                ParticleSystem shieldParticle = ParticlePool.instance.GetParticleSystem(projectileData.shieldParticle);
-                shieldParticle.transform.position = hit.point;
-                shieldParticle.gameObject.SetActive(true);
             }
 
             timeToRemove = projectileData.lifeCountdown;

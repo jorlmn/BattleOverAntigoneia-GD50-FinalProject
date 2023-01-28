@@ -28,6 +28,7 @@ public class BatteryWeapon : Weapon
 
             muzzleFlash.gameObject.SetActive(false);
             muzzleFlash.gameObject.SetActive(true);
+            
             justFired = true;
             firingCoolDown = projectileData.fireAgainDelay;
             StartCoroutine(ResetFiringCoolDown());
