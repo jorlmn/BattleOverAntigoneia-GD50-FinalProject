@@ -41,11 +41,11 @@ public class PlayerMovement : MonoBehaviour
 
     public void ToggleTurbo()
     {
-        shipEngine.currentVelocity = shipEngine.currentVelocity == "turbo" ? "standard" : "turbo";
+        shipEngine.ToggleTurbo();
     }
 
     public void ToggleStealth()
     {
-        shipEngine.currentVelocity = shipEngine.currentVelocity == "stealth" ? "standard" : "stealth";
+        shipEngine.ToggleStealth();
     }
 }

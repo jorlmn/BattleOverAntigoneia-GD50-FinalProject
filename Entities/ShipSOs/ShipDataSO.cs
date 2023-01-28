@@ -17,9 +17,12 @@ public class ShipDataSO : ScriptableObject
     public int maxShield;
     public float shieldRecoveryRate;
 
+    [Header("Engine")]
     public int maxRearSpeed;
     public int standardVelocity;
     public int turboVelocity;
-    public float stealthVelocity;
+    public int stealthVelocity;
     public int rotationSpeed;
+    public float turboRecoveryRate;
+    public float turboSpendRate;
 }

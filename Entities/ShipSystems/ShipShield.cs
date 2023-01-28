@@ -6,9 +6,8 @@ public class ShipShield : MonoBehaviour
 {
     public float maxShield;
     public float currentShield;
-
-
     public float shieldRecoveryRate;
+
     public bool overloadRecharge = false;
     private bool standardRecharge = false;
 
@@ -49,10 +48,10 @@ public class ShipShield : MonoBehaviour
         while (currentShield < maxShield)
         {
             currentShield += shieldRecoveryRate;
-            currentShield = Mathf.Clamp(currentShield, 0, maxShield);
             yield return new WaitForSeconds(1);
         }
 
+        currentShield = Mathf.Clamp(currentShield, 0, maxShield);
         standardRecharge = false;
         yield break;
     }
