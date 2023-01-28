@@ -6,15 +6,21 @@ public class EngineHealth : Health
 {
     private float maxEngineHealth;
     private float currentEngineHealth;
+    private ShipSystemsManager shipSystems;
 
     [SerializeField] List<GameObject> engineParts = new ();
-    private ShipSystemsManager shipSystems;
+    private List<int> activeEnginesIndex = new();
 
     void Start()
     {
         shipSystems = GetComponentInParent<ShipSystemsManager>();
         maxEngineHealth = shipSystems.shipData.maxEngineHealth;
         currentEngineHealth = maxEngineHealth;
+
+        for(int i = 0; i < engineParts.Count; i++)
+        {
+            activeEnginesIndex.Add(i);
+        }
     }
 
     public override bool TakeDamage(float damage)
@@ -49,7 +55,7 @@ public class EngineHealth : Health
     {
         switch (healthPercentage)
         {
-            case float i when i > 0.7f:
+            case float i when i > 0.5f:
                 foreach(GameObject engine in engineParts)
                 {
                     engine.SetActive(true);
@@ -65,20 +71,18 @@ public class EngineHealth : Health
 
             case float i when i <= 0.5f:
 
-                int enginesToDisable = Mathf.RoundToInt((1f / engineParts.Count) / healthPercentage);
+                int enginesToDisable = Mathf.RoundToInt(Mathf.Lerp(0, engineParts.Count, 1 - healthPercentage));
 
-                for (int z = 0; z < engineParts.Count; z++)
+                while (enginesToDisable > engineParts.Count - activeEnginesIndex.Count)
                 {
-                    if (enginesToDisable > 0)
-                    {   
-                        engineParts[z].SetActive(false);
-                        enginesToDisable -= 1;
-                    }
-                    else
-                    {
-                        engineParts[z].SetActive(true);
-                    }
+                    int randomEngineToDisable = Random.Range(0, activeEnginesIndex.Count - 1);
+
+                    engineParts[activeEnginesIndex[randomEngineToDisable]].SetActive(false);
+                    activeEnginesIndex.Remove(randomEngineToDisable);
+
+                    enginesToDisable--;
                 }
+
                 break;
         }
     }  

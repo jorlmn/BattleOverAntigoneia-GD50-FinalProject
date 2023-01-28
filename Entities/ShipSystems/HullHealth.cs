@@ -8,13 +8,13 @@ public class HullHealth : Health
 
     public float currentHullHealth;
 
-    public ShipShield shipShield = null;
+    [HideInInspector] public ShipShield shipShield = null;
 
     public override bool TakeDamage(float damage)
     {
         if (shipShield == null)
         {
-            currentHullHealth += damage;
+            currentHullHealth -= damage;
 
             currentHullHealth = Mathf.Clamp(currentHullHealth, 0, maxHullHealth);
 
