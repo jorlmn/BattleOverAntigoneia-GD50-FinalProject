@@ -6,6 +6,7 @@ public abstract class Weapon : MonoBehaviour
 {
     [Header("Projectile")]
     public ProjectileSO projectileData;
+    public ParticleSystem muzzleFlash;
 
     [Header("Firing")]
     public bool justFired = false;
@@ -20,5 +21,11 @@ public abstract class Weapon : MonoBehaviour
     public Transform sideWaysPivot;
     public Transform upAndDownPivot;
 
+    void Start()
+    {
+        source = GetComponentInParent<ShipSystemsManager>().transform;
+        muzzleFlash = GetComponentInChildren<ParticleSystem>();
+        muzzleFlash.gameObject.SetActive(false);
+    }
     public abstract void Shoot(Vector3 aimPoint);
 }

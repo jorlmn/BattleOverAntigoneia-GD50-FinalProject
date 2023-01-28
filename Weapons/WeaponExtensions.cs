@@ -77,7 +77,6 @@ public static class WeaponExtensions
         {
             if (hit.transform == weapon.source)
             {
-                Debug.Log("hitting source " + weapon.source);
                 return false;
 
             }
@@ -85,13 +84,10 @@ public static class WeaponExtensions
             {
                 if (hitWeapon.source == weapon.source)
                 {
-                    Debug.Log("hitting weapon source " + weapon.source);
                     return false;
                 }
             }
         }
-
-        Debug.Log("not hitting source");
         return true;
     }
 }

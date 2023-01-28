@@ -21,7 +21,10 @@ public class PlayerWeaponsManager : MonoBehaviour
         {
             foreach(Weapon weapon in selectedWeapons)
             {
-                weapon.RotateWeapon(target.aimPoint);
+                if (weapon.active)
+                {
+                    weapon.RotateWeapon(target.aimPoint);
+                }
             }
         }
     }
@@ -34,10 +37,7 @@ public class PlayerWeaponsManager : MonoBehaviour
         {
             foreach(Weapon weapon in shipSystems.weaponsByType[weaponIndex])
             {
-                if (weapon.active)
-                {
-                    selectedWeapons.Add(weapon);
-                }
+                selectedWeapons.Add(weapon);
             }
         }
     }
@@ -46,9 +46,12 @@ public class PlayerWeaponsManager : MonoBehaviour
     {
         foreach(Weapon weapon in selectedWeapons)
         {
-            if (weapon.WithinAngleToFire(target.aimPoint) && weapon.WithinDistanceToFire(target.aimPoint) && weapon.NotHittingSource(target.aimPoint))
+            if (weapon.active)
             {
-                weapon.Shoot(target.aimPoint);
+                if (weapon.WithinAngleToFire(target.aimPoint) && weapon.WithinDistanceToFire(target.aimPoint) && weapon.NotHittingSource(target.aimPoint))
+                {
+                    weapon.Shoot(target.aimPoint);
+                }
             }
         }
     }

@@ -2,13 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DualTurretWeapon : Weapon
+public class BatteryWeapon : Weapon
 {
-
-    void Start()
-    {
-        source = GetComponentInParent<ShipSystemsManager>().transform;
-    }
     public override void Shoot(Vector3 aimPoint)
     {
         if (!justFired)
@@ -30,7 +25,9 @@ public class DualTurretWeapon : Weapon
                 bullet.GetComponent<Rigidbody>().velocity = transform.GetComponentInParent<Rigidbody>().velocity + (aimPoint - mainFirePosition.position).normalized * projectileData.speed + transform.TransformVector(gunSpread);
 
             }
-            
+
+            muzzleFlash.gameObject.SetActive(false);
+            muzzleFlash.gameObject.SetActive(true);
             justFired = true;
             firingCoolDown = projectileData.fireAgainDelay;
             StartCoroutine(ResetFiringCoolDown());
