@@ -50,14 +50,14 @@ public class AudioSettings : MonoBehaviour
 
     public void PortrayAudioSettings()
     {
-        musicSliderText.text = ((int)(musicSlider.value * 100)).ToString();
         musicSlider.value = musicLevel;
+        musicSliderText.text = ((int)(musicSlider.value * 100)).ToString();
 
-        soundEffectsSliderText.text = ((int)(soundEffectsSlider.value * 100)).ToString();
         soundEffectsSlider.value = soundEffectsLevel;
+        soundEffectsSliderText.text = ((int)(soundEffectsSlider.value * 100)).ToString();
 
-        uiSoundsSliderText.text = ((int)(uiSoundsSlider.value * 100)).ToString();
         uiSoundsSlider.value = uiSoundsLevel;
+        uiSoundsSliderText.text = ((int)(uiSoundsSlider.value * 100)).ToString();
     }
 
     public void ResetAudioSettings()
