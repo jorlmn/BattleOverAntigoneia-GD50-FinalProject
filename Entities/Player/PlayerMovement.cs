@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
     private ShipEngine shipEngine;
     private Vector2 playerVelocity;
     private Rigidbody rb;
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody>();
         shipEngine = GetComponent<ShipEngine>();

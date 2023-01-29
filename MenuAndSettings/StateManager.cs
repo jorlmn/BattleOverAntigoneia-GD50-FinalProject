@@ -28,12 +28,6 @@ public class StateManager : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-        GameState = gameStates.playState;
-        Time.timeScale = 1;
-    }
-
     public enum gameStates
     {
         playState,
@@ -50,7 +44,7 @@ public class StateManager : MonoBehaviour
         notAiming
     }
 
-    public static gameStates GameState = gameStates.playState;
+    public static gameStates GameState = gameStates.cutsceneState;
 
     public static AimStates AimState = AimStates.notAiming;
 

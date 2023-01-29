@@ -4,7 +4,7 @@ using UnityEngine;
 public class CameraManager : MonoBehaviour
 {
     [Header("Camera to Aim At Following Target")]
-    [SerializeField] Transform playerShip;
+    public Transform playerShipTarget;
 
     [Header("Camera Object and Settings")]
     [SerializeField] float maxZoomDistance = 25f;
@@ -81,7 +81,7 @@ public class CameraManager : MonoBehaviour
 
     private void FixCameraAtPlayer()
     {
-        cameraGrandParent.position = playerShip.position;
+        cameraGrandParent.position = playerShipTarget.position;
     }
     private void ZoomInAndOut()
     {

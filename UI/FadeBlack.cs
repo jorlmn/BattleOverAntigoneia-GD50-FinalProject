@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FadeBlack : MonoBehaviour
 {
+    [SerializeField] int seconds = 2;
     void Start()
     {
         StartCoroutine(FadeIn());
@@ -11,7 +12,7 @@ public class FadeBlack : MonoBehaviour
 
     IEnumerator FadeIn()
     {
-        yield return new WaitForSecondsRealtime(2);
+        yield return new WaitForSecondsRealtime(seconds);
 
         gameObject.GetComponent<Animator>().SetTrigger("FadeIn");
         yield break;

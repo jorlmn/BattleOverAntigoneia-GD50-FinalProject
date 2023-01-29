@@ -12,6 +12,8 @@ public class ShipSystemsManager : MonoBehaviour
     [HideInInspector] public ShipEngine shipEngine;
     [HideInInspector] public ShipShield shipShield;
 
+    public Transform cameraTarget;
+
     void Awake()
     {
         shipHealth = GetComponent<HullHealth>();

@@ -21,9 +21,9 @@ public class InputManager : MonoBehaviour
     public static float  verticalInput = 0f;
 
     [Header("Components")]
-    [SerializeField] PlayerMovement playerMovement;
+    public PlayerMovement playerMovement;
 
-    [SerializeField] PlayerWeaponsManager playerWeapons;
+    public PlayerWeaponsManager playerWeapons;
 
     void Start()
     {
