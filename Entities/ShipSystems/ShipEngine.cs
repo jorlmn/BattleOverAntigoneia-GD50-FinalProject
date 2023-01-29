@@ -16,8 +16,6 @@ public class ShipEngine : MonoBehaviour
 
 
     [Header("Engine Sound")]
-    public float minEngineAudioPitch = 0.05f;
-    public float maxEnginePitch = 1;
     public AudioSource engineAudio;
     void Start()
     {
@@ -28,12 +26,12 @@ public class ShipEngine : MonoBehaviour
 
         currentVelocity = "standard";
 
-        engineAudio.pitch = minEngineAudioPitch;
+        engineAudio.pitch = shipData.minEnginePitch;
     }
 
     void Update()
     {
-        engineAudio.pitch = Mathf.Lerp(minEngineAudioPitch, maxEnginePitch, shipRb.velocity.magnitude / shipData.turboVelocity);
+        engineAudio.pitch = Mathf.Lerp(shipData.minEnginePitch, shipData.maxEnginePitch, shipRb.velocity.magnitude / shipData.turboVelocity);
     }
 
     public void EngineSpeedAdjustment(float healthPercentage)

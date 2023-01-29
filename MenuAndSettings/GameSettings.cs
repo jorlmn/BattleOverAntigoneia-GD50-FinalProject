@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 using TMPro;
+
 
 public class GameSettings : MonoBehaviour
 {
@@ -19,19 +21,9 @@ public class GameSettings : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-
     [SerializeField] Slider difficultySlider;
     [SerializeField] TextMeshProUGUI difficultySliderText;
     public static float difficultyModifier = 1f;
-
-    [SerializeField] Slider musicSlider;
-    [SerializeField] TextMeshProUGUI musicSliderText;
-    public static int musicLevel = 100;
-
-    [SerializeField] Slider soundsSlider;
-    [SerializeField] TextMeshProUGUI soundsSliderText;
-    public static int soundsLevel = 100;
 
     [SerializeField] Slider mouseSensitivitySlider;
     [SerializeField] TextMeshProUGUI mouseSensitivitySliderText;
@@ -46,10 +38,6 @@ public class GameSettings : MonoBehaviour
     void Start()
     {
         difficultySlider.onValueChanged.AddListener(delegate { DifficultySliderCheck(); });
-
-        musicSlider.onValueChanged.AddListener(delegate { MusicSliderCheck(); });
-
-        soundsSlider.onValueChanged.AddListener(delegate { SoundsSliderCheck(); });
 
         mouseSensitivitySlider.onValueChanged.AddListener(delegate { MouseSensitivitySliderCheck(); });
     }
@@ -71,18 +59,6 @@ public class GameSettings : MonoBehaviour
                 difficultySliderText.text = "VERY HARD";
                 break;
         }
-    }
-
-    private void MusicSliderCheck()
-    {
-        musicSliderText.text = musicSlider.value.ToString();
-        musicLevel = (int)musicSlider.value;
-    }
-
-    private void SoundsSliderCheck()
-    {
-        soundsSliderText.text = soundsSlider.value.ToString();
-        soundsLevel = (int)soundsSlider.value;
     }
 
     private void MouseSensitivitySliderCheck()
@@ -112,12 +88,6 @@ public class GameSettings : MonoBehaviour
                 break;
         }
 
-        musicSliderText.text = musicLevel.ToString();
-        musicSlider.value = musicLevel;
-
-        soundsSliderText.text = soundsLevel.ToString();
-        soundsSlider.value = soundsLevel;
-
         mouseSensitivitySliderText.text = mouseSensitivity.ToString();
         mouseSensitivitySlider.value = mouseSensitivity;
 
@@ -129,9 +99,6 @@ public class GameSettings : MonoBehaviour
     public void ResetSettings()
     {
         difficultyModifier = 1f;
-        musicLevel = 100;
-        soundsLevel = 100;
-        mouseSensitivity = 100;
 
         Screen.fullScreen = true;
 

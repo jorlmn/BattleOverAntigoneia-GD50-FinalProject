@@ -32,7 +32,7 @@ public class ParticlePool : MonoBehaviour
                 {
                     ParticleSystem particle = Instantiate(SOReference.instance.particleSos[i].particle, instance.transform);
                     particle.gameObject.SetActive(false);
-                    Pools[SOReference.instance.projectileSos[i].id].Add(particle);
+                    Pools[SOReference.instance.particleSos[i].id].Add(particle);
                 }
             }
         }

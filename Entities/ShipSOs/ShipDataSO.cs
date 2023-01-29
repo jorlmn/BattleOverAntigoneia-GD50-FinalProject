@@ -26,4 +26,6 @@ public class ShipDataSO : ScriptableObject
     public float turboRecoveryRate;
     public float turboSpendRate;
     public int maxTurbo;
+    public float minEnginePitch = 0.05f;
+    public float maxEnginePitch = 1;
 }
