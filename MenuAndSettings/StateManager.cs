@@ -7,11 +7,9 @@ public class StateManager : MonoBehaviour
     public static StateManager instance = null;
 
     [Header("Objects")]
-    [SerializeField]
-    Animator matchMenu;
+    [SerializeField] Animator matchMenu;
 
-    [SerializeField]
-    AudioSource mainMenuAudio;
+    [SerializeField] AudioSource mainMenuAudio;
 
     [Header("Components")]
     public CameraManager cameraComponent;
@@ -41,7 +39,9 @@ public class StateManager : MonoBehaviour
         playState,
         pauseState,
         cutsceneState,
-        panelInteractionState
+        panelInteractionState,
+        gameWonState,
+        gameOverState
     }
 
     public enum AimStates

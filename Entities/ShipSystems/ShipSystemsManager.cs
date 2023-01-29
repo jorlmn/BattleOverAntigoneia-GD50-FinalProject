@@ -33,12 +33,12 @@ public class ShipSystemsManager : MonoBehaviour
     {
         foreach (Weapon weapon in weaponsList)
         {
-            if (!weaponsByType.ContainsKey(weapon.weaponData.weaponType))
+            if (!weaponsByType.ContainsKey(weapon.weaponType))
             {
-                weaponsByType.Add(weapon.GetComponent<Weapon>().weaponData.weaponType, new List<Weapon>());
+                weaponsByType.Add(weapon.GetComponent<Weapon>().weaponType, new List<Weapon>());
             }
 
-            weaponsByType[weapon.weaponData.weaponType].Add(weapon);
+            weaponsByType[weapon.weaponType].Add(weapon);
         }
     }
 }

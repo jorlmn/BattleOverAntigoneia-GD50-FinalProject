@@ -15,6 +15,7 @@ public abstract class Weapon : MonoBehaviour
 
     [Header("Weapon Data")]
     public WeaponDataSO weaponData;
+    public int weaponType = 1;
     public bool active = true;
 
     public Transform mainFirePosition;
@@ -24,7 +25,7 @@ public abstract class Weapon : MonoBehaviour
     void Start()
     {
         source = GetComponentInParent<ShipSystemsManager>().transform;
-        muzzleFlash = GetComponentInChildren<ParticleSystem>();
+        muzzleFlash = mainFirePosition.GetComponentInChildren<ParticleSystem>();
         muzzleFlash.gameObject.SetActive(false);
     }
     public abstract void Shoot(Vector3 aimPoint);

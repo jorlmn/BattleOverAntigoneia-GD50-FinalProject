@@ -10,6 +10,5 @@ public class WeaponDataSO : ScriptableObject
     public float upwardsAngleLimit;
     public float downwardsAngleLimit;
     public float sidewaysAngleLimit;
-    public int weaponType = 1;
     public float maxHealth;
 }

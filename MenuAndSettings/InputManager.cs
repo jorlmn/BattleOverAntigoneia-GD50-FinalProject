@@ -109,7 +109,7 @@ public class InputManager : MonoBehaviour
 
     void AimStateInputEvents()
     {
-        if (Input.GetKeyDown(Keybindings.keyFireWeapon))
+        if (Input.GetKey(Keybindings.keyFireWeapon))
         {
             playerWeapons.FireWeapon();
         }
