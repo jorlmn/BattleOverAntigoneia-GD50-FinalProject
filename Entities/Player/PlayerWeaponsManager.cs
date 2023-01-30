@@ -8,6 +8,8 @@ public class PlayerWeaponsManager : MonoBehaviour
     ShipSystemsManager shipSystems = null;
     public List<Weapon> selectedWeapons = new();
 
+    [SerializeField] float playerInAccuracy;
+
     void Start()
     {
         target = GetComponent<PlayerTarget>();
@@ -50,7 +52,7 @@ public class PlayerWeaponsManager : MonoBehaviour
             {
                 if (weapon.WithinAngleToFire(target.aimPoint) && weapon.WithinDistanceToFire(target.aimPoint) && weapon.NotHittingSource(target.aimPoint))
                 {
-                    weapon.Shoot(target.aimPoint);
+                    weapon.Shoot(target.aimPoint, playerInAccuracy);
                 }
             }
         }

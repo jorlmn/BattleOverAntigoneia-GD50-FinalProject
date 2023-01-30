@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class BatteryWeapon : Weapon
 {
-    public override void Shoot(Vector3 aimPoint)
+    public override void Shoot(Vector3 aimPoint, float inaccuracy = 0, float extraReloadTime = 0)
     {
         if (!justFired)
         {
             Vector3 gunSpread = new();
-            gunSpread.x = Random.Range(-(projectileData.defaultInAccuracy), projectileData.defaultInAccuracy);
-            gunSpread.y = Random.Range(-(projectileData.defaultInAccuracy), projectileData.defaultInAccuracy);
+            gunSpread.x = Random.Range(-(projectileData.defaultInAccuracy + inaccuracy), projectileData.defaultInAccuracy + inaccuracy);
+            gunSpread.y = Random.Range(-(projectileData.defaultInAccuracy + inaccuracy), projectileData.defaultInAccuracy + inaccuracy);
             gunSpread.z = 0;
 
             GameObject bullet = ProjectilePool.instance.GetProjectilePrefab(projectileData.id);
@@ -30,7 +30,7 @@ public class BatteryWeapon : Weapon
             muzzleFlash.gameObject.SetActive(true);
             
             justFired = true;
-            firingCoolDown = projectileData.fireAgainDelay;
+            firingCoolDown = projectileData.fireAgainDelay + extraReloadTime;
             StartCoroutine(ResetFiringCoolDown());
         }
         else if (justFired)

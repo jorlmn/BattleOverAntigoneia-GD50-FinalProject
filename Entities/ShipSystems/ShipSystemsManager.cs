@@ -5,7 +5,7 @@ using UnityEngine;
 public class ShipSystemsManager : MonoBehaviour
 {
     public ShipDataSO shipData;
-    [SerializeField] Weapon[] weaponsList;
+    public Weapon[] weaponsList;
     public Dictionary<int, List<Weapon>> weaponsByType = new();
 
     [HideInInspector] public HullHealth shipHealth;
@@ -13,7 +13,6 @@ public class ShipSystemsManager : MonoBehaviour
     [HideInInspector] public ShipShield shipShield;
 
     public Transform cameraTarget;
-
     void Awake()
     {
         shipHealth = GetComponent<HullHealth>();

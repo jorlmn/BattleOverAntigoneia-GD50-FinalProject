@@ -60,6 +60,7 @@ public static class WeaponExtensions
         }
         return false;
     }
+
     public static bool WithinDistanceToFire(this Weapon weapon, Vector3 targetPosition)
     {
         float distance = Vector3.Distance(targetPosition, weapon.mainFirePosition.position);
@@ -67,7 +68,6 @@ public static class WeaponExtensions
         {
             return true;
         }
-
         return false;
     }
 

@@ -19,13 +19,13 @@ public class MultiBatteryWeapon : Weapon
             extraMuzzleFlashes[i].gameObject.SetActive(false);
         }
     }
-    public override void Shoot(Vector3 aimPoint)
+    public override void Shoot(Vector3 aimPoint, float inaccuracy = 0, float extraReloadTime = 0)
     {
         if (!justFired)
         {
             Vector3 gunSpread = new();
-            gunSpread.x = Random.Range(-(projectileData.defaultInAccuracy), projectileData.defaultInAccuracy);
-            gunSpread.y = Random.Range(-(projectileData.defaultInAccuracy), projectileData.defaultInAccuracy);
+            gunSpread.x = Random.Range(-(projectileData.defaultInAccuracy + inaccuracy), projectileData.defaultInAccuracy + inaccuracy);
+            gunSpread.y = Random.Range(-(projectileData.defaultInAccuracy + inaccuracy), projectileData.defaultInAccuracy + inaccuracy);
             gunSpread.z = 0;
 
             GameObject bullet = ProjectilePool.instance.GetProjectilePrefab(projectileData.id);
@@ -44,11 +44,11 @@ public class MultiBatteryWeapon : Weapon
             muzzleFlash.gameObject.SetActive(false);
             muzzleFlash.gameObject.SetActive(true);
 
-            FireExtraCannons(aimPoint);
+            FireExtraCannons(aimPoint, inaccuracy);
 
             
             justFired = true;
-            firingCoolDown = projectileData.fireAgainDelay;
+            firingCoolDown = projectileData.fireAgainDelay + extraReloadTime;
             StartCoroutine(ResetFiringCoolDown());
         }
         else if (justFired)
@@ -65,13 +65,13 @@ public class MultiBatteryWeapon : Weapon
         }
     }
 
-    private void FireExtraCannons(Vector3 aimPoint)
+    private void FireExtraCannons(Vector3 aimPoint, float inaccuracy = 0)
     {
         for (int i = 0; i < extraCannons.Count; i++)
         {
             Vector3 gunSpread = new();
-            gunSpread.x = Random.Range(-(projectileData.defaultInAccuracy), projectileData.defaultInAccuracy);
-            gunSpread.y = Random.Range(-(projectileData.defaultInAccuracy), projectileData.defaultInAccuracy);
+            gunSpread.x = Random.Range(-(projectileData.defaultInAccuracy + inaccuracy), projectileData.defaultInAccuracy + inaccuracy);
+            gunSpread.y = Random.Range(-(projectileData.defaultInAccuracy + inaccuracy), projectileData.defaultInAccuracy + inaccuracy);
             gunSpread.z = 0;
 
             GameObject bullet = ProjectilePool.instance.GetProjectilePrefab(projectileData.id);
