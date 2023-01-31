@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class EngineHealth : Health
 {
-    private float maxEngineHealth;
-    private float currentEngineHealth;
     private ShipSystemsManager shipSystems;
 
     [SerializeField] List<GameObject> engineParts = new ();
     private List<int> activeEnginesIndex = new();
 
+    [SerializeField] ParticleSystem explosionAndSmoke;
+
     void Start()
     {
         shipSystems = GetComponentInParent<ShipSystemsManager>();
-        maxEngineHealth = shipSystems.shipData.maxEngineHealth;
-        currentEngineHealth = maxEngineHealth;
+        maxHealth = shipSystems.shipData.maxEngineHealth;
+        currentHealth = maxHealth;
+
+        explosionAndSmoke.gameObject.SetActive(false);
 
         for(int i = 0; i < engineParts.Count; i++)
         {
@@ -25,17 +27,24 @@ public class EngineHealth : Health
 
     public override bool TakeDamage(float damage)
     {
-        bool hitHull = shipSystems.shipHealth.TakeDamage((damage / 4) + (currentEngineHealth - damage < 0 ? Mathf.Abs(currentEngineHealth - damage) : 0));
+        bool hitHull = shipSystems.shipHealth.TakeDamage((damage / 4) + (currentHealth - damage < 0 ? Mathf.Abs(currentHealth - damage) : 0));
 
         if (hitHull == true)
         {
-            currentEngineHealth -= damage;
+            currentHealth -= damage;
 
-            currentEngineHealth = Mathf.Clamp(currentEngineHealth, 0, currentEngineHealth);
+            currentHealth = Mathf.Clamp(currentHealth, 0, currentHealth);
 
-            shipSystems.shipEngine.EngineSpeedAdjustment(currentEngineHealth / maxEngineHealth);
+            shipSystems.shipEngine.EngineSpeedAdjustment(currentHealth / maxHealth);
 
-            DisableEngineParts(currentEngineHealth / maxEngineHealth);
+            DisableEngineParts(currentHealth / maxHealth);
+
+            if (currentHealth <= 0)
+            {
+                explosionAndSmoke.gameObject.SetActive(true);
+                shipSystems.shipEngine.TurboOff();
+                shipSystems.shipEngine.active = false;
+            }
         }
 
         return hitHull;
@@ -43,10 +52,10 @@ public class EngineHealth : Health
 
     public override void Repair(float repairPoints)
     {
-        currentEngineHealth += repairPoints;
-        currentEngineHealth = Mathf.Clamp(currentEngineHealth, 0, maxEngineHealth);
+        currentHealth += repairPoints;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
-        shipSystems.shipEngine.EngineSpeedAdjustment(currentEngineHealth / maxEngineHealth);
+        shipSystems.shipEngine.EngineSpeedAdjustment(currentHealth / maxHealth);
     }
 
     void DisableEngineParts(float healthPercentage)

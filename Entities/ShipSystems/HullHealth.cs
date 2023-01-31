@@ -4,21 +4,17 @@ using UnityEngine;
 
 public class HullHealth : Health
 {
-    public float maxHullHealth;
-
-    public float currentHullHealth;
-
     [HideInInspector] public ShipShield shipShield = null;
 
     public override bool TakeDamage(float damage)
     {
         if (shipShield == null || shipShield.overloadRecharge)
         {
-            currentHullHealth -= damage;
+            currentHealth -= damage;
 
-            currentHullHealth = Mathf.Clamp(currentHullHealth, 0, maxHullHealth);
+            currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
-            if (currentHullHealth <= 0)
+            if (currentHealth <= 0)
             {
                 //OnDeath(this, EventArgs.Empty);
             }
@@ -31,15 +27,15 @@ public class HullHealth : Health
 
             if (shipShield.currentShield <= 0)
             {
-                currentHullHealth += shipShield.currentShield;
+                currentHealth += shipShield.currentShield;
 
-                currentHullHealth = Mathf.Clamp(currentHullHealth, 0, maxHullHealth);
+                currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
                 shipShield.currentShield = 0;
 
                 shipShield.ShieldOverload();
 
-                if (currentHullHealth <= 0)
+                if (currentHealth <= 0)
                 {
                     //OnDeath(this, EventArgs.Empty);
                 }
@@ -55,7 +51,7 @@ public class HullHealth : Health
 
     public override void Repair(float repairPoints)
     {
-        currentHullHealth += repairPoints;
-        currentHullHealth = Mathf.Clamp(currentHullHealth, 0, maxHullHealth);
+        currentHealth += repairPoints;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
     }
 }

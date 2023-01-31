@@ -16,8 +16,8 @@ public class ShipSystemsManager : MonoBehaviour
     void Awake()
     {
         shipHealth = GetComponent<HullHealth>();
-        shipHealth.maxHullHealth = shipData.maxHullHealth;
-        shipHealth.currentHullHealth = shipData.maxHullHealth;
+        shipHealth.maxHealth = shipData.maxHullHealth;
+        shipHealth.currentHealth = shipData.maxHullHealth;
 
         shipEngine = GetComponent<ShipEngine>();
         shipEngine.shipData = shipData;

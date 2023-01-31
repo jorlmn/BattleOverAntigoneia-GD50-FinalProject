@@ -52,6 +52,18 @@ public static class WeaponExtensions
     }
 
 
+    public static void ResetRotation(this Weapon weapon)
+    {
+        Quaternion mainXRotation = Quaternion.RotateTowards(weapon.sideWaysPivot.rotation, weapon.transform.rotation, weapon.weaponData.rotationSpeed * Time.deltaTime);
+        Vector3 sideWaysEulerAngles = mainXRotation.eulerAngles;
+
+        sideWaysEulerAngles.x = weapon.sideWaysPivot.rotation.x;
+        sideWaysEulerAngles.z = weapon.sideWaysPivot.rotation.z;
+
+        weapon.sideWaysPivot.rotation = Quaternion.Euler(sideWaysEulerAngles);
+    }
+
+
     public static bool WithinAngleToFire(this Weapon weapon, Vector3 targetPosition)
     {
         if (Vector3.Angle(targetPosition - weapon.mainFirePosition.position, weapon.mainFirePosition.forward) <= weapon.projectileData.angleToFire && Vector3.Angle(targetPosition - weapon.mainFirePosition.position, weapon.mainFirePosition.forward) >= -weapon.projectileData.angleToFire)
@@ -67,7 +79,7 @@ public static class WeaponExtensions
         {
             return true;
         }
-        else if ((Vector3.Angle(targetPosition - weapon.transform.position, weapon.transform.forward) <= weapon.weaponData.sidewaysAngleLimit && Vector3.Angle(targetPosition - weapon.transform.position, weapon.transform.forward) >= -weapon.weaponData.sidewaysAngleLimit))
+        else if (Vector3.Angle(targetPosition - weapon.transform.position, weapon.transform.forward) <= weapon.weaponData.sidewaysAngleLimit && Vector3.Angle(targetPosition - weapon.transform.position, weapon.transform.forward) >= -weapon.weaponData.sidewaysAngleLimit)
         {
             return true;
         }
@@ -94,9 +106,33 @@ public static class WeaponExtensions
                 return false;
 
             }
-            else if (hit.transform.TryGetComponent<Weapon>(out Weapon hitWeapon))
+            else if (hit.transform.TryGetComponent<ShipSystemsManager>(out ShipSystemsManager hitShip))
             {
-                if (hitWeapon.source == weapon.source)
+                if (hitShip.transform == weapon.source)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static bool NotHittingOtherAIOrSource(this Weapon weapon, Vector3 targetPosition)
+    {
+        if (Physics.Raycast(new Ray(weapon.mainFirePosition.position, (targetPosition - weapon.mainFirePosition.position).normalized), out RaycastHit hit, weapon.projectileData.gunMaxRange, weapon.projectileData.isDamageable, QueryTriggerInteraction.Collide))
+        {
+            if (hit.transform == weapon.source)
+            {
+                return false;
+
+            }
+            else if (hit.transform.TryGetComponent<ShipSystemsManager>(out ShipSystemsManager hitShip))
+            {
+                if (hitShip.transform == weapon.source)
+                {
+                    return false;
+                }
+                else if (hitShip.transform.TryGetComponent<AIStateManager>(out AIStateManager ai))
                 {
                     return false;
                 }

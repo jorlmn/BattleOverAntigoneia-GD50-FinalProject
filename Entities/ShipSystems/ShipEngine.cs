@@ -14,6 +14,9 @@ public class ShipEngine : MonoBehaviour
     public float currentTurbo = 100;
     private bool overloadRecharge = false;
 
+    [Header("Engine Status")]
+    public bool active = true;
+
 
     [Header("Engine Sound")]
     public AudioSource engineAudio;
@@ -52,13 +55,20 @@ public class ShipEngine : MonoBehaviour
         }
         else
         {
-            if (!overloadRecharge)
+            if (!overloadRecharge && active)
             {
                 currentVelocity = "turbo";
                 StopAllCoroutines();
                 StartCoroutine(TurboSpending());
             }
         }
+    }
+
+    public void TurboOff()
+    {
+        currentVelocity = "standard";
+        StopAllCoroutines();
+        StartCoroutine(TurboStandardRecovery());
     }
 
     public void ToggleStealth()

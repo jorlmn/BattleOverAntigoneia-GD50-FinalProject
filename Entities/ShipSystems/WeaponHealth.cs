@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class WeaponHealth : Health
 {
-    private float maxWeaponHealth;
-    private float currentWeaponHealth;
     private HullHealth shipHull;
     private Weapon weapon;
 
@@ -15,8 +13,8 @@ public class WeaponHealth : Health
     {
         weapon = GetComponent<Weapon>();
         shipHull = GetComponentInParent<HullHealth>();
-        maxWeaponHealth = weapon.weaponData.maxHealth;
-        currentWeaponHealth = maxWeaponHealth;
+        maxHealth = weapon.weaponData.maxHealth;
+        currentHealth = maxHealth;
 
         explosionAndSmoke.gameObject.SetActive(false);
     }
@@ -24,15 +22,15 @@ public class WeaponHealth : Health
     public override bool TakeDamage(float damage)
     {
 
-        bool hitHull = shipHull.TakeDamage((damage / 4) + (currentWeaponHealth - damage < 0 ? Mathf.Abs(currentWeaponHealth - damage) : 0));
+        bool hitHull = shipHull.TakeDamage((damage / 4) + (currentHealth - damage < 0 ? Mathf.Abs(currentHealth - damage) : 0));
 
         if (hitHull == true)
         {
-            currentWeaponHealth -= damage;
+            currentHealth -= damage;
 
-            currentWeaponHealth = Mathf.Clamp(currentWeaponHealth, 0, maxWeaponHealth);
+            currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
-            if (currentWeaponHealth <= 0)
+            if (currentHealth <= 0)
             {
                 explosionAndSmoke.gameObject.SetActive(true);
                 weapon.active = false;
@@ -44,7 +42,7 @@ public class WeaponHealth : Health
 
     public override void Repair(float repairPoints)
     {
-        currentWeaponHealth += repairPoints;
-        currentWeaponHealth = Mathf.Clamp(currentWeaponHealth, 0, maxWeaponHealth);
+        currentHealth += repairPoints;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
     }
 }

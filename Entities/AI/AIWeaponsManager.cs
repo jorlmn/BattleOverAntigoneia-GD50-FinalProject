@@ -12,7 +12,7 @@ public class AIWeaponsManager : MonoBehaviour
 
     public Dictionary<Weapon, Transform> weaponTargets = new ();
 
-    public string shipPart = "hull";  
+    public string preferredShipPartTarget = "hull";  
 
     void Start()
     {
@@ -29,6 +29,7 @@ public class AIWeaponsManager : MonoBehaviour
 
     public void StartEngaging()
     {
+        StopAllCoroutines();
         StartCoroutine(SetWeaponTarget());
         StartCoroutine(EngageEnemy());
     }
@@ -36,6 +37,7 @@ public class AIWeaponsManager : MonoBehaviour
     public void StopEngaging()
     {
         StopAllCoroutines();
+        ResetWeapons();
     }
 
     IEnumerator EngageEnemy()
@@ -44,13 +46,13 @@ public class AIWeaponsManager : MonoBehaviour
         {
             foreach(Weapon weapon in shipSystems.weaponsList)
             {
-                if (weaponTargets[weapon] != null)
+                if (weaponTargets[weapon] != null && weapon.active)
                 {
-                    weapon.RotateWeapon(target.transform.position);
+                    weapon.RotateWeapon(weaponTargets[weapon].position);
 
-                    if (weapon.WithinAngleToFire(target.transform.position) && weapon.WithinDistanceToFire(target.transform.position) && weapon.NotHittingSource(target.transform.position))
+                    if (weapon.WithinAngleToFire(weaponTargets[weapon].position) && weapon.WithinDistanceToFire(weaponTargets[weapon].position) && weapon.NotHittingOtherAIOrSource(weaponTargets[weapon].position))
                     {
-                        weapon.Shoot(target.transform.position, aiInAcuraccy);
+                        weapon.Shoot(weaponTargets[weapon].position, aiInAcuraccy);
                     }
                 }
             }
@@ -65,48 +67,95 @@ public class AIWeaponsManager : MonoBehaviour
     {
         while (aiStateManager.aiFightState == aiFightState.engaging)
         {
-            Debug.Log("finding new weapon target");
             foreach(Weapon weapon in shipSystems.weaponsList)
             {
                 if (weapon.active)
                 {   
-                    if (weaponTargets[weapon] == null)
-                    {
-                        weaponTargets[weapon] = FindClosestTargetPoint(weapon);
-                    }
-                
-                    if (weaponTargets[weapon] != null)
-                    {
-                        if (!weapon.WithinDistanceToFire(weaponTargets[weapon].position))
-                        {
-                            weaponTargets[weapon] = FindClosestTargetPoint(weapon);
-                        }
-                    }
+                    weaponTargets[weapon] = FindClosestTargetPoint(weapon);
                 }
             }
 
-            yield return new WaitForSeconds(10);
+            yield return new WaitForSeconds(4);
+        }
+        yield break;
+    }
+
+    private void ResetWeapons()
+    {
+        foreach(Weapon weapon in shipSystems.weaponsList)
+        {
+            weaponTargets[weapon] = null;
+        }
+
+        StartCoroutine(WeaponRotationReset());
+    }
+
+    IEnumerator WeaponRotationReset()
+    {
+        float duration = 3f;
+        while (duration > 0)
+        {
+            foreach(Weapon weapon in shipSystems.weaponsList)
+            {
+                if (weapon.active)
+                {   
+                    weapon.ResetRotation();
+                }
+            }
+            duration -= Time.deltaTime;
+            yield return null;
         }
         yield break;
     }
 
     private Transform FindClosestTargetPoint(Weapon weapon)
     {
-        Transform currentTarget = target.criticalParts[shipPart][0];
-        float currentDistance = Vector3.Distance(weapon.transform.position, target.criticalParts[shipPart][0].position);
+        Transform currentTarget = null;
+        float currentDistance = Vector3.Distance(weapon.transform.position, target.criticalParts[preferredShipPartTarget][0].position);
         
-        for (int i = 0; i < target.criticalParts[shipPart].Count; i++)
+        for (int i = 0; i < target.criticalParts[preferredShipPartTarget].Count; i++)
         {
-            if (weapon.WithinFireArc(target.criticalParts[shipPart][i].position))
+            if (target.criticalParts[preferredShipPartTarget][i].TryGetComponent<Health>(out Health health))
             {
-                if (currentDistance > Vector3.Distance(weapon.transform.position, target.criticalParts[shipPart][i].position))
+                if (health.currentHealth > 0)
                 {
-                    currentTarget = target.criticalParts[shipPart][i];
-                    currentDistance = Vector3.Distance(weapon.transform.position, target.criticalParts[shipPart][i].position);
+                    if (weapon.WithinFireArc(target.criticalParts[preferredShipPartTarget][i].position))
+                    {
+                        if (currentDistance >= Vector3.Distance(weapon.transform.position, target.criticalParts[preferredShipPartTarget][i].position))
+                        {
+                            currentTarget = target.criticalParts[preferredShipPartTarget][i];
+                            currentDistance = Vector3.Distance(weapon.transform.position, target.criticalParts[preferredShipPartTarget][i].position);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (weapon.WithinFireArc(target.criticalParts[preferredShipPartTarget][i].position))
+                {
+                    if (currentDistance >= Vector3.Distance(weapon.transform.position, target.criticalParts[preferredShipPartTarget][i].position))
+                    {
+                        currentTarget = target.criticalParts[preferredShipPartTarget][i];
+                        currentDistance = Vector3.Distance(weapon.transform.position, target.criticalParts[preferredShipPartTarget][i].position);
+                    }
                 }
             }
         }
-
+        
+        if (currentTarget == null && preferredShipPartTarget != "hull")
+        {
+            for (int i = 0; i < target.criticalParts["hull"].Count; i++)
+            {
+                if (weapon.WithinFireArc(target.criticalParts["hull"][i].position))
+                {
+                    if (currentDistance >= Vector3.Distance(weapon.transform.position, target.criticalParts["hull"][i].position))
+                    {
+                        currentTarget = target.criticalParts["hull"][i];
+                        currentDistance = Vector3.Distance(weapon.transform.position, target.criticalParts["hull"][i].position);
+                    }
+                }
+            }
+        }
         return currentTarget;
     }
 
