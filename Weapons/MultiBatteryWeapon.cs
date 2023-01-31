@@ -44,7 +44,7 @@ public class MultiBatteryWeapon : Weapon
             muzzleFlash.gameObject.SetActive(false);
             muzzleFlash.gameObject.SetActive(true);
 
-            FireExtraCannons(aimPoint, inaccuracy);
+            FireExtraCannons(aimPoint, gunSpread);
 
             
             justFired = true;
@@ -65,15 +65,10 @@ public class MultiBatteryWeapon : Weapon
         }
     }
 
-    private void FireExtraCannons(Vector3 aimPoint, float inaccuracy = 0)
+    private void FireExtraCannons(Vector3 aimPoint, Vector3 gunSpread)
     {
         for (int i = 0; i < extraCannons.Count; i++)
         {
-            Vector3 gunSpread = new();
-            gunSpread.x = Random.Range(-(projectileData.defaultInAccuracy + inaccuracy), projectileData.defaultInAccuracy + inaccuracy);
-            gunSpread.y = Random.Range(-(projectileData.defaultInAccuracy + inaccuracy), projectileData.defaultInAccuracy + inaccuracy);
-            gunSpread.z = 0;
-
             GameObject bullet = ProjectilePool.instance.GetProjectilePrefab(projectileData.id);
             if (bullet != null)
             {

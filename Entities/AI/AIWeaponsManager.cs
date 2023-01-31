@@ -44,11 +44,14 @@ public class AIWeaponsManager : MonoBehaviour
         {
             foreach(Weapon weapon in shipSystems.weaponsList)
             {
-                weapon.RotateWeapon(target.transform.position);
-
-                if (weapon.WithinAngleToFire(target.transform.position) && weapon.WithinDistanceToFire(target.transform.position) && weapon.NotHittingSource(target.transform.position))
+                if (weaponTargets[weapon] != null)
                 {
-                    weapon.Shoot(target.transform.position, aiInAcuraccy);
+                    weapon.RotateWeapon(target.transform.position);
+
+                    if (weapon.WithinAngleToFire(target.transform.position) && weapon.WithinDistanceToFire(target.transform.position) && weapon.NotHittingSource(target.transform.position))
+                    {
+                        weapon.Shoot(target.transform.position, aiInAcuraccy);
+                    }
                 }
             }
 
@@ -65,23 +68,25 @@ public class AIWeaponsManager : MonoBehaviour
             Debug.Log("finding new weapon target");
             foreach(Weapon weapon in shipSystems.weaponsList)
             {
-                if (weaponTargets[weapon] == null)
-                {
-                    weaponTargets[weapon] = FindClosestTargetPoint(weapon);
-                }
-            
-                if (weaponTargets[weapon] != null)
-                {
-                    if (!weapon.WithinDistanceToFire(weaponTargets[weapon].position))
+                if (weapon.active)
+                {   
+                    if (weaponTargets[weapon] == null)
                     {
                         weaponTargets[weapon] = FindClosestTargetPoint(weapon);
+                    }
+                
+                    if (weaponTargets[weapon] != null)
+                    {
+                        if (!weapon.WithinDistanceToFire(weaponTargets[weapon].position))
+                        {
+                            weaponTargets[weapon] = FindClosestTargetPoint(weapon);
+                        }
                     }
                 }
             }
 
             yield return new WaitForSeconds(10);
         }
-
         yield break;
     }
 
@@ -92,13 +97,18 @@ public class AIWeaponsManager : MonoBehaviour
         
         for (int i = 0; i < target.criticalParts[shipPart].Count; i++)
         {
-            if (currentDistance > Vector3.Distance(weapon.transform.position, target.criticalParts[shipPart][i].position))
+            if (weapon.WithinFireArc(target.criticalParts[shipPart][i].position))
             {
-                currentTarget = target.criticalParts[shipPart][i];
-                currentDistance = Vector3.Distance(weapon.transform.position, target.criticalParts[shipPart][i].position);
+                if (currentDistance > Vector3.Distance(weapon.transform.position, target.criticalParts[shipPart][i].position))
+                {
+                    currentTarget = target.criticalParts[shipPart][i];
+                    currentDistance = Vector3.Distance(weapon.transform.position, target.criticalParts[shipPart][i].position);
+                }
             }
         }
 
         return currentTarget;
     }
+
+
 }

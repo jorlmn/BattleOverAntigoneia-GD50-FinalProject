@@ -61,6 +61,20 @@ public static class WeaponExtensions
         return false;
     }
 
+    public static bool WithinFireArc(this Weapon weapon, Vector3 targetPosition)
+    {
+        if (weapon.weaponData.is360Turret)
+        {
+            return true;
+        }
+        else if ((Vector3.Angle(targetPosition - weapon.transform.position, weapon.transform.forward) <= weapon.weaponData.sidewaysAngleLimit && Vector3.Angle(targetPosition - weapon.transform.position, weapon.transform.forward) >= -weapon.weaponData.sidewaysAngleLimit))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     public static bool WithinDistanceToFire(this Weapon weapon, Vector3 targetPosition)
     {
         float distance = Vector3.Distance(targetPosition, weapon.mainFirePosition.position);

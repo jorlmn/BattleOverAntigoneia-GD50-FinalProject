@@ -9,12 +9,16 @@ public class WeaponHealth : Health
     private HullHealth shipHull;
     private Weapon weapon;
 
+    [SerializeField] ParticleSystem explosionAndSmoke;
+
     void Start()
     {
         weapon = GetComponent<Weapon>();
         shipHull = GetComponentInParent<HullHealth>();
         maxWeaponHealth = weapon.weaponData.maxHealth;
         currentWeaponHealth = maxWeaponHealth;
+
+        explosionAndSmoke.gameObject.SetActive(false);
     }
 
     public override bool TakeDamage(float damage)
@@ -30,6 +34,7 @@ public class WeaponHealth : Health
 
             if (currentWeaponHealth <= 0)
             {
+                explosionAndSmoke.gameObject.SetActive(true);
                 weapon.active = false;
             }
         }
