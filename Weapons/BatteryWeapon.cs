@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BatteryWeapon : Weapon
 {
-    public override void Shoot(Vector3 aimPoint, float inaccuracy = 0, float extraReloadTime = 0)
+    public override void Shoot(Vector3 aimPoint, float inaccuracy = 0, float extraReloadTime = 0, float damageModifier = 1)
     {
         if (!justFired)
         {
@@ -20,6 +20,7 @@ public class BatteryWeapon : Weapon
                 Projectile projectileScript = bullet.GetComponent<Projectile>();
                 projectileScript.projectileData = projectileData;
                 projectileScript.timeToRemove = projectileData.lifeCountdown;
+                projectileScript.damageModifier = damageModifier;
 
                 bullet.SetActive(true);
                 bullet.GetComponent<Rigidbody>().velocity = transform.GetComponentInParent<Rigidbody>().velocity + (aimPoint - mainFirePosition.position).normalized * projectileData.speed + transform.TransformVector(gunSpread);
@@ -32,18 +33,6 @@ public class BatteryWeapon : Weapon
             justFired = true;
             firingCoolDown = projectileData.fireAgainDelay + extraReloadTime;
             StartCoroutine(ResetFiringCoolDown());
-        }
-        else if (justFired)
-        {
-            //Debug.Log("The Weapon is cooling down");
-        }
-        else if (!justFired)
-        {
-            //Debug.Log("The weapon is reloading");
-        }
-        else
-        {
-            //Debug.Log("The clip is empty");
         }
     }
 

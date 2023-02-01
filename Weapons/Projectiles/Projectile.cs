@@ -9,4 +9,6 @@ public abstract class Projectile : MonoBehaviour
 
     [Header("Projectile Stats")]
     public ProjectileSO projectileData;
+
+    public float damageModifier = 1f;
 }

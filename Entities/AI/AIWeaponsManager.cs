@@ -8,10 +8,8 @@ public class AIWeaponsManager : MonoBehaviour
     AIStateManager aiStateManager = null;
 
     public CriticalPartsManager target;
-    public float aiInAcuraccy = 5;
 
     public Dictionary<Weapon, Transform> weaponTargets = new ();
-
     public string preferredShipPartTarget = "hull";  
 
     void Start()
@@ -52,7 +50,7 @@ public class AIWeaponsManager : MonoBehaviour
 
                     if (weapon.WithinAngleToFire(weaponTargets[weapon].position) && weapon.WithinDistanceToFire(weaponTargets[weapon].position) && weapon.NotHittingOtherAIOrSource(weaponTargets[weapon].position))
                     {
-                        weapon.Shoot(weaponTargets[weapon].position, aiInAcuraccy);
+                        weapon.Shoot(weaponTargets[weapon].position, Random.Range(aiStateManager.aiData.minInaccuracy, aiStateManager.aiData.maxInaccuracy), Random.Range(aiStateManager.aiData.minFiringDelay, aiStateManager.aiData.maxFiringDelay), aiStateManager.aiData.aiDamageModifier);
                     }
                 }
             }

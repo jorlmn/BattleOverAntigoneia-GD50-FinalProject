@@ -26,24 +26,25 @@ public class BulletProjectile : Projectile
             bool hitHull = false;
             if (hit.transform.gameObject.TryGetComponent<Health>(out Health shipPart))
             {
-                    hitHull = shipPart.TakeDamage(projectileData.damage);
+
+                    hitHull = shipPart.TakeDamage(Random.Range(projectileData.minDamage, projectileData.maxDamage) * damageModifier);
 
                 if (hitHull == true)
                 {
-                    ParticleSystem explosionParticle = ParticlePool.instance.GetParticleSystem(projectileData.standardDamageParticle);
+                    ParticleSystem explosionParticle = ParticlePool.instance.GetParticleSystem(projectileData.standardDamageParticleIndex);
                     explosionParticle.transform.position = hit.point;
                     explosionParticle.gameObject.SetActive(true);
                 }
                 else
                 {
-                    ParticleSystem shieldParticle = ParticlePool.instance.GetParticleSystem(projectileData.shieldParticle);
+                    ParticleSystem shieldParticle = ParticlePool.instance.GetParticleSystem(projectileData.shieldParticleIndex);
                     shieldParticle.transform.position = hit.point;
                     shieldParticle.gameObject.SetActive(true);
                 }
             }
             else
             {
-                ParticleSystem explosionParticle = ParticlePool.instance.GetParticleSystem(projectileData.standardDamageParticle);
+                ParticleSystem explosionParticle = ParticlePool.instance.GetParticleSystem(projectileData.standardDamageParticleIndex);
                 explosionParticle.transform.position = hit.point;
                 explosionParticle.gameObject.SetActive(true);
             }

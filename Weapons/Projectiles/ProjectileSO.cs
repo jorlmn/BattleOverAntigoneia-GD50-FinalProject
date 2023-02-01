@@ -7,9 +7,10 @@ public class ProjectileSO : ScriptableObject
 {
  [Header("Projectile Data")]
     public int id;
-    public int damage;
+    public float minDamage;
+    public float maxDamage;
     public int speed;
-    public float lifeCountdown = 4f;
+    public float lifeCountdown = 3f;
     public GameObject projectilePrefab;
 
     [Header("Gun Data")]
@@ -21,7 +22,6 @@ public class ProjectileSO : ScriptableObject
     public int angleToFire = 10;
     public LayerMask isDamageable;
 
-    public int standardDamageParticle = 0;
-    public int shieldParticle = 0;
-    public int criticalDamageParticle = 0;
+    public int standardDamageParticleIndex = 0;
+    public int shieldParticleIndex = 0;
 }

@@ -28,5 +28,5 @@ public abstract class Weapon : MonoBehaviour
         muzzleFlash = mainFirePosition.GetComponentInChildren<ParticleSystem>();
         muzzleFlash.gameObject.SetActive(false);
     }
-    public abstract void Shoot(Vector3 aimPoint, float inaccuracy = 0, float extraReloadTime = 0);
+    public abstract void Shoot(Vector3 aimPoint, float inaccuracy = 0, float extraReloadTime = 0, float damageModifier = 1);
 }

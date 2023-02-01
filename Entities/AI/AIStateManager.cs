@@ -9,7 +9,7 @@ public class AIStateManager : MonoBehaviour
     public aiMovementState aiMovementState = aiMovementState.idle;
     public aiFightState aiFightState = aiFightState.idle;
 
-    public int aiData;
+    public AIDataSO aiData;
 
     void Start()
     {

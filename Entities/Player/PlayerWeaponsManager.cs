@@ -9,6 +9,7 @@ public class PlayerWeaponsManager : MonoBehaviour
     public List<Weapon> selectedWeapons = new();
 
     [SerializeField] float playerInAccuracy;
+    [SerializeField] float playerDamageModifier;
 
     void Start()
     {

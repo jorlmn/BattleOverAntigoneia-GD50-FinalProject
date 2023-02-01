@@ -19,7 +19,7 @@ public class MultiBatteryWeapon : Weapon
             extraMuzzleFlashes[i].gameObject.SetActive(false);
         }
     }
-    public override void Shoot(Vector3 aimPoint, float inaccuracy = 0, float extraReloadTime = 0)
+    public override void Shoot(Vector3 aimPoint, float inaccuracy = 0, float extraReloadTime = 0, float damageModifier = 1)
     {
         if (!justFired)
         {
@@ -35,6 +35,7 @@ public class MultiBatteryWeapon : Weapon
                 Projectile projectileScript = bullet.GetComponent<Projectile>();
                 projectileScript.projectileData = projectileData;
                 projectileScript.timeToRemove = projectileData.lifeCountdown;
+                projectileScript.damageModifier = damageModifier;
 
                 bullet.SetActive(true);
                 bullet.GetComponent<Rigidbody>().velocity = transform.GetComponentInParent<Rigidbody>().velocity + (aimPoint - mainFirePosition.position).normalized * projectileData.speed + transform.TransformVector(gunSpread);
@@ -44,28 +45,16 @@ public class MultiBatteryWeapon : Weapon
             muzzleFlash.gameObject.SetActive(false);
             muzzleFlash.gameObject.SetActive(true);
 
-            FireExtraCannons(aimPoint, gunSpread);
+            FireExtraCannons(aimPoint, gunSpread, damageModifier);
 
             
             justFired = true;
             firingCoolDown = projectileData.fireAgainDelay + extraReloadTime;
             StartCoroutine(ResetFiringCoolDown());
         }
-        else if (justFired)
-        {
-            //Debug.Log("The Weapon is cooling down");
-        }
-        else if (!justFired)
-        {
-            //Debug.Log("The weapon is reloading");
-        }
-        else
-        {
-            //Debug.Log("The clip is empty");
-        }
     }
 
-    private void FireExtraCannons(Vector3 aimPoint, Vector3 gunSpread)
+    private void FireExtraCannons(Vector3 aimPoint, Vector3 gunSpread, float damageModifier = 1)
     {
         for (int i = 0; i < extraCannons.Count; i++)
         {
@@ -76,6 +65,7 @@ public class MultiBatteryWeapon : Weapon
                 Projectile projectileScript = bullet.GetComponent<Projectile>();
                 projectileScript.projectileData = projectileData;
                 projectileScript.timeToRemove = projectileData.lifeCountdown;
+                projectileScript.damageModifier = damageModifier;
 
                 bullet.SetActive(true);
                 bullet.GetComponent<Rigidbody>().velocity = transform.GetComponentInParent<Rigidbody>().velocity + (aimPoint - extraCannons[i].position).normalized * projectileData.speed + transform.TransformVector(gunSpread);
