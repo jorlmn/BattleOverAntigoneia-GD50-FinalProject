@@ -9,6 +9,7 @@ public class ShipDataSO : ScriptableObject
     public int id;
     public string shipModel;
     public GameObject shipPrefab;
+    public GameObject shipWreck;
 
 
     [Header("Ship Stats")]

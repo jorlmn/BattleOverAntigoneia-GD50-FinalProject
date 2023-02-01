@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerTarget : MonoBehaviour
 {
-    [SerializeField] Camera playerCamera;
+    [HideInInspector] public  Camera playerCamera;
     [SerializeField] LayerMask cameraToCrossHairLayerMask;
 
     public Vector3 aimPoint = Vector3.zero;

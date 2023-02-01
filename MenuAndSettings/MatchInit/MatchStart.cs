@@ -5,7 +5,11 @@ using UnityEngine;
 public class MatchStart : MonoBehaviour
 {
     
-    [SerializeField] GameObject fighter;
+    [SerializeField] GameObject scout;
+
+    [SerializeField] GameObject raider;
+
+    [SerializeField] GameObject freighter;
 
     [SerializeField] GameObject cruiser;
 
@@ -13,6 +17,8 @@ public class MatchStart : MonoBehaviour
 
 
     [SerializeField] CameraManager cameraManager;
+
+    private GameObject selectedShip = null;
 
     void Awake()
     {
@@ -25,23 +31,27 @@ public class MatchStart : MonoBehaviour
         switch (MatchSettings.shipChosenIndex)
         {
             case 0:
-                InputManager.instance.playerMovement = fighter.GetComponent<PlayerMovement>();
-                InputManager.instance.playerWeapons = fighter.GetComponent<PlayerWeaponsManager>();
-                cameraManager.playerShipTarget = fighter.GetComponent<ShipSystemsManager>().cameraTarget;
+                selectedShip = scout;
+
                 break;
             case 1:
-
-                InputManager.instance.playerMovement = cruiser.GetComponent<PlayerMovement>();
-                InputManager.instance.playerWeapons = cruiser.GetComponent<PlayerWeaponsManager>();
-                cameraManager.playerShipTarget = cruiser.GetComponent<ShipSystemsManager>().cameraTarget;
+                selectedShip = raider;
                 break;
             case 2:
-
-                InputManager.instance.playerMovement = battleship.GetComponent<PlayerMovement>();
-                InputManager.instance.playerWeapons = battleship.GetComponent<PlayerWeaponsManager>();
-                cameraManager.playerShipTarget = battleship.GetComponent<ShipSystemsManager>().cameraTarget;
+                selectedShip = freighter;
+                break;
+            case 3:
+                selectedShip = cruiser;
+                break;
+            case 4:
+                selectedShip = battleship;
                 break;
         }
+
+        InputManager.instance.playerMovement = selectedShip.GetComponent<PlayerMovement>();
+        InputManager.instance.playerWeapons = selectedShip.GetComponent<PlayerWeaponsManager>();
+        selectedShip.GetComponent<PlayerTarget>().playerCamera = cameraManager.GetComponent<Camera>();
+        cameraManager.playerShipTarget = selectedShip.GetComponent<ShipSystemsManager>().cameraTarget;
     }
 
     IEnumerator StartCoolDown()
@@ -49,19 +59,10 @@ public class MatchStart : MonoBehaviour
         StateManager.GameState = StateManager.gameStates.cutsceneState;
         yield return new WaitForSecondsRealtime(1);
 
-        switch (MatchSettings.shipChosenIndex)
-        {
-            case 0:
-                fighter.SetActive(true);
-                break;
-            case 1:
-                cruiser.SetActive(true);
-                break;
-                            case 2:
-                battleship.SetActive(true);
-                break;
-        }
 
+        selectedShip.SetActive(true);
+
+        //selectedShip.GetComponent<ShipSystemsManager>().OnShipDeath.AddListener(GameEndManager.instance.OnPlayerDeath);
         StateManager.GameState = StateManager.gameStates.playState;
         Time.timeScale = 1;
         yield break;

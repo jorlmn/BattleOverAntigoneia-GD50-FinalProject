@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class HullHealth : Health
 {
@@ -16,7 +17,7 @@ public class HullHealth : Health
 
             if (currentHealth <= 0)
             {
-                //OnDeath(this, EventArgs.Empty);
+                GetComponent<ShipSystemsManager>().TriggerShipDeath();
             }
             return true;
 
@@ -37,7 +38,7 @@ public class HullHealth : Health
 
                 if (currentHealth <= 0)
                 {
-                    //OnDeath(this, EventArgs.Empty);
+                    GetComponent<ShipSystemsManager>().TriggerShipDeath();
                 }
                 return true;
             }

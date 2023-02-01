@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ShipSystemsManager : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class ShipSystemsManager : MonoBehaviour
     [HideInInspector] public ShipShield shipShield;
 
     public Transform cameraTarget;
+
+    public UnityEvent OnShipDeath = new UnityEvent();
     void Awake()
     {
         shipHealth = GetComponent<HullHealth>();
@@ -41,5 +44,22 @@ public class ShipSystemsManager : MonoBehaviour
 
             weaponsByType[weapon.weaponType].Add(weapon);
         }
+
+        OnShipDeath.AddListener(SpawnShipWreck);
+    }
+
+    public void TriggerShipDeath()
+    {
+        OnShipDeath.Invoke();
+    }
+
+    private void SpawnShipWreck()
+    {
+        GameObject shipWreck = Instantiate(shipData.shipWreck);
+        shipWreck.gameObject.SetActive(false);
+        shipWreck.transform.SetPositionAndRotation(transform.position, transform.rotation);
+
+        shipWreck.SetActive(true);
+        gameObject.SetActive(false);
     }
 }
