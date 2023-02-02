@@ -4,15 +4,26 @@ using UnityEngine;
 
 public class ShipWreckage : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private Rigidbody rb = null;
+
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnEnable()
     {
-        
+        rb = rb == null ? GetComponent<Rigidbody>() : rb;
+        rb.velocity = Vector3.zero;
+        StartCoroutine(RotateWreck());
+    }
+
+    IEnumerator RotateWreck()
+    {
+        yield return new WaitForSeconds(0.5f);
+        int leftOrRight = Random.Range(0,1) == 0 ? -1: 1;
+        rb.AddTorque(transform.forward * Random.Range(0, 10) * leftOrRight, ForceMode.Acceleration);
+
+        yield break;
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BeamWeapon : Weapon
 {
-    [SerializeField] LineRenderer beamRenderer;
+    private LineRenderer beamRenderer;
     [SerializeField] LayerMask defaultLayer;
 
     void Start()

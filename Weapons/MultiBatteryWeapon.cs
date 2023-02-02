@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MultiBatteryWeapon : Weapon
 {
-    [SerializeField] List<Transform> extraCannons = new();
+    public List<Transform> extraCannons = new();
     private List<ParticleSystem> extraMuzzleFlashes = new();
 
     void Start()

@@ -114,6 +114,30 @@ public static class WeaponExtensions
                 }
             }
         }
+
+        MultiBatteryWeapon multiBatteryWeapon = weapon as MultiBatteryWeapon;
+        if (multiBatteryWeapon)
+        {
+            foreach (Transform barrel in multiBatteryWeapon.extraCannons)
+            {
+                if (Physics.Raycast(new Ray(weapon.mainFirePosition.position, (targetPosition - weapon.mainFirePosition.position).normalized), out RaycastHit hitted, weapon.projectileData.gunMaxRange, weapon.projectileData.isDamageable, QueryTriggerInteraction.Collide))
+                {
+                    if (hitted.transform == weapon.source)
+                    {
+                        return false;
+
+                    }
+                    else if (hitted.transform.TryGetComponent<ShipSystemsManager>(out ShipSystemsManager hitShip))
+                    {
+                        if (hitShip.transform == weapon.source)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+
         return true;
     }
 
@@ -135,6 +159,29 @@ public static class WeaponExtensions
                 else if (hitShip.transform.TryGetComponent<AIStateManager>(out AIStateManager ai))
                 {
                     return false;
+                }
+            }
+        }
+
+        MultiBatteryWeapon multiBatteryWeapon = weapon as MultiBatteryWeapon;
+        if (multiBatteryWeapon)
+        {
+            foreach (Transform barrel in multiBatteryWeapon.extraCannons)
+            {
+                if (Physics.Raycast(new Ray(weapon.mainFirePosition.position, (targetPosition - weapon.mainFirePosition.position).normalized), out RaycastHit hitted, weapon.projectileData.gunMaxRange, weapon.projectileData.isDamageable, QueryTriggerInteraction.Collide))
+                {
+                    if (hitted.transform == weapon.source)
+                    {
+                        return false;
+
+                    }
+                    else if (hitted.transform.TryGetComponent<ShipSystemsManager>(out ShipSystemsManager hitShip))
+                    {
+                        if (hitShip.transform == weapon.source)
+                        {
+                            return false;
+                        }
+                    }
                 }
             }
         }

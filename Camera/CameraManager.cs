@@ -7,15 +7,15 @@ public class CameraManager : MonoBehaviour
     public Transform playerShipTarget;
 
     [Header("Camera Object and Settings")]
-    [SerializeField] float maxZoomDistance = 25f;
-    [SerializeField] float minZoomDistance = 10f;
-    [SerializeField] float defaultIdleZoomDistance = 15f;
-    [SerializeField] float aimingMinZoomDistance = 15f;
+    [SerializeField] public float maxZoomDistance = 30f;
+    [SerializeField] float minZoomDistance = 8f;
+    [SerializeField] public float defaultIdleZoomDistance = 15f;
+    [SerializeField] public float aimingMinZoomDistance = 15f;
     [SerializeField] float cameraSensitivity = 0.5f;
     [SerializeField] float scrollWheelSensitivity = 50f;
     [SerializeField] float cameraMinInclination = 25f;
     [SerializeField] float cameraMaxInclination = 60f;
-    [SerializeField] float minDistanceToInclinate = 13f;
+    [SerializeField] float minDistanceToInclinate = 5f;
 
 
     private float currentZoomDistance;

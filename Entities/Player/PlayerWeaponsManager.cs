@@ -24,7 +24,7 @@ public class PlayerWeaponsManager : MonoBehaviour
         {
             foreach(Weapon weapon in selectedWeapons)
             {
-                if (weapon.active)
+                if (weapon.active && weapon.WithinFireArc(target.aimPoint))
                 {
                     weapon.RotateWeapon(target.aimPoint);
                 }

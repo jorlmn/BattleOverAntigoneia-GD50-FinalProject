@@ -38,7 +38,7 @@ public class BulletProjectile : Projectile
                 else
                 {
                     ParticleSystem shieldParticle = ParticlePool.instance.GetParticleSystem(projectileData.shieldParticleIndex);
-                    shieldParticle.transform.position = hit.point;
+                    shieldParticle.transform.SetPositionAndRotation(hit.point, Quaternion.FromToRotation(Vector3.back, hit.normal));
                     shieldParticle.gameObject.SetActive(true);
                 }
             }

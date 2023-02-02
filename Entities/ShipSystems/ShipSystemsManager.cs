@@ -59,7 +59,6 @@ public class ShipSystemsManager : MonoBehaviour
         shipWreck.gameObject.SetActive(false);
         shipWreck.transform.SetPositionAndRotation(transform.position, transform.rotation);
 
-        shipWreck.GetComponent<Rigidbody>().velocity = GetComponent<Rigidbody>().velocity;
         shipWreck.SetActive(true);
         gameObject.SetActive(false);
     }

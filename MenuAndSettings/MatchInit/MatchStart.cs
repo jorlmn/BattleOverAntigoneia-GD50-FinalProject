@@ -45,6 +45,10 @@ public class MatchStart : MonoBehaviour
                 break;
             case 4:
                 selectedShip = battleship;
+
+                cameraManager.maxZoomDistance = 80f;
+                cameraManager.defaultIdleZoomDistance = 30f;
+                cameraManager.aimingMinZoomDistance = 30f;
                 break;
         }
 
