@@ -48,16 +48,16 @@ public class MainMenu : MonoBehaviour
         switch ((int)difficultySlider.value)
         {
             case 0:
-                GameSettings.difficultyModifier = 0.5f;
+                GameSettings.difficulty = "easy";
                 break;
             case 1:
-                GameSettings.difficultyModifier = 1f;
+                GameSettings.difficulty = "medium";
                 break;
             case 2:
-                GameSettings.difficultyModifier = 1.5f;
+                GameSettings.difficulty = "hard";
                 break;
             case 3:
-                GameSettings.difficultyModifier = 2f;
+                GameSettings.difficulty = "very hard";
                 break;
         }
         

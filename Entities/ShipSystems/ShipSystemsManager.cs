@@ -15,7 +15,9 @@ public class ShipSystemsManager : MonoBehaviour
 
     public Transform cameraTarget;
 
-    public UnityEvent OnShipDeath = new UnityEvent();
+    public delegate void DeathEvent();
+
+    public event DeathEvent OnDeath;
     void Awake()
     {
         shipHealth = GetComponent<HullHealth>();
@@ -41,16 +43,22 @@ public class ShipSystemsManager : MonoBehaviour
             {
                 weaponsByType.Add(weapon.GetComponent<Weapon>().weaponType, new List<Weapon>());
             }
-
             weaponsByType[weapon.weaponType].Add(weapon);
         }
+    }
 
-        OnShipDeath.AddListener(SpawnShipWreck);
+    void OnEnable()
+    {
+        OnDeath += SpawnShipWreck;
+    }
+    void OnDisable()
+    {
+        OnDeath -= SpawnShipWreck;
     }
 
     public void TriggerShipDeath()
     {
-        OnShipDeath.Invoke();
+        OnDeath();
     }
 
     private void SpawnShipWreck()

@@ -30,7 +30,7 @@ public class MatchStart : MonoBehaviour
     {
         switch (MatchSettings.shipChosenIndex)
         {
-            case 0:
+            case 6: // case 0 
                 selectedShip = scout;
 
                 break;
@@ -43,7 +43,7 @@ public class MatchStart : MonoBehaviour
             case 3:
                 selectedShip = cruiser;
                 break;
-            case 4:
+            case 0: // case 4
                 selectedShip = battleship;
 
                 cameraManager.maxZoomDistance = 80f;
@@ -66,7 +66,7 @@ public class MatchStart : MonoBehaviour
 
         selectedShip.SetActive(true);
 
-        //selectedShip.GetComponent<ShipSystemsManager>().OnShipDeath.AddListener(GameEndManager.instance.OnPlayerDeath);
+        selectedShip.GetComponent<ShipSystemsManager>().OnDeath += GameEndManager.instance.OnPlayerDeath;
         StateManager.GameState = StateManager.gameStates.playState;
         Time.timeScale = 1;
         yield break;

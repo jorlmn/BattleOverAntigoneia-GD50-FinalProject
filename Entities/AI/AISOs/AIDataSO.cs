@@ -5,10 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New AIDataSO",menuName ="AIDataSO/Create New AIDataSO")]
 public class AIDataSO : ScriptableObject
 {
+    public string preset;
     public float minFiringDelay;
     public float maxFiringDelay;
     public float minInaccuracy;
     public float maxInaccuracy;
-
-    public float aiDamageModifier;
+    public float damageModifier;
 }

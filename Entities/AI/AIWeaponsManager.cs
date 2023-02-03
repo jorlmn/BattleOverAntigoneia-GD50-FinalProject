@@ -50,7 +50,7 @@ public class AIWeaponsManager : MonoBehaviour
 
                     if (weapon.WithinAngleToFire(weaponTargets[weapon].position) && weapon.WithinDistanceToFire(weaponTargets[weapon].position) && weapon.NotHittingOtherAIOrSource(weaponTargets[weapon].position))
                     {
-                        weapon.Shoot(weaponTargets[weapon].position, Random.Range(aiStateManager.aiData.minInaccuracy, aiStateManager.aiData.maxInaccuracy), Random.Range(aiStateManager.aiData.minFiringDelay, aiStateManager.aiData.maxFiringDelay), aiStateManager.aiData.aiDamageModifier);
+                        weapon.Shoot(weaponTargets[weapon].position, Random.Range(MatchSettings.difficultyPresets[GameSettings.difficulty].minInaccuracy, MatchSettings.difficultyPresets[GameSettings.difficulty].maxInaccuracy), Random.Range(MatchSettings.difficultyPresets[GameSettings.difficulty].minFiringDelay, MatchSettings.difficultyPresets[GameSettings.difficulty].maxFiringDelay), MatchSettings.difficultyPresets[GameSettings.difficulty].damageModifier);
                     }
                 }
             }

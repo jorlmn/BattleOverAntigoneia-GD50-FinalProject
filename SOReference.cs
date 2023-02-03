@@ -10,6 +10,8 @@ public class SOReference : MonoBehaviour
 
     public List<ParticleSO> particleSos;
 
+    public List<AIDataSO> difficultyPresets = new();
+
     private void Awake()
     {
         if (SOReference.instance == null)

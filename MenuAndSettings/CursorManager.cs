@@ -58,7 +58,6 @@ public class CursorManager : MonoBehaviour
                 break;
 
             default:
-
                 cursorImage.sprite = PanelCursor;
                 customCursor.SetActive(true);
                 Cursor.lockState = CursorLockMode.Confined;

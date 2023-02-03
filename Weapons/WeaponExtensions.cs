@@ -101,39 +101,16 @@ public static class WeaponExtensions
     {
         if (Physics.Raycast(new Ray(weapon.mainFirePosition.position, (targetPosition - weapon.mainFirePosition.position).normalized), out RaycastHit hit, weapon.projectileData.gunMaxRange, weapon.projectileData.isDamageable, QueryTriggerInteraction.Collide))
         {
-            if (hit.transform == weapon.source)
+            if (Object.ReferenceEquals(hit.transform.gameObject, weapon.source.gameObject))
             {
                 return false;
 
             }
-            else if (hit.transform.TryGetComponent<ShipSystemsManager>(out ShipSystemsManager hitShip))
+            else if (hit.transform.TryGetComponent<Weapon>(out Weapon hitWeapon))
             {
-                if (hitShip.transform == weapon.source)
+                if (Object.ReferenceEquals(hitWeapon.source.gameObject, weapon.source.gameObject))
                 {
                     return false;
-                }
-            }
-        }
-
-        MultiBatteryWeapon multiBatteryWeapon = weapon as MultiBatteryWeapon;
-        if (multiBatteryWeapon)
-        {
-            foreach (Transform barrel in multiBatteryWeapon.extraCannons)
-            {
-                if (Physics.Raycast(new Ray(weapon.mainFirePosition.position, (targetPosition - weapon.mainFirePosition.position).normalized), out RaycastHit hitted, weapon.projectileData.gunMaxRange, weapon.projectileData.isDamageable, QueryTriggerInteraction.Collide))
-                {
-                    if (hitted.transform == weapon.source)
-                    {
-                        return false;
-
-                    }
-                    else if (hitted.transform.TryGetComponent<ShipSystemsManager>(out ShipSystemsManager hitShip))
-                    {
-                        if (hitShip.transform == weapon.source)
-                        {
-                            return false;
-                        }
-                    }
                 }
             }
         }
@@ -145,21 +122,21 @@ public static class WeaponExtensions
     {
         if (Physics.Raycast(new Ray(weapon.mainFirePosition.position, (targetPosition - weapon.mainFirePosition.position).normalized), out RaycastHit hit, weapon.projectileData.gunMaxRange, weapon.projectileData.isDamageable, QueryTriggerInteraction.Collide))
         {
-            if (hit.transform == weapon.source)
+            if (Object.ReferenceEquals(hit.transform.gameObject, weapon.source.gameObject))
             {
                 return false;
 
             }
-            else if (hit.transform.TryGetComponent<ShipSystemsManager>(out ShipSystemsManager hitShip))
+            else if (hit.transform.TryGetComponent<Weapon>(out Weapon hitWeapon))
             {
-                if (hitShip.transform == weapon.source)
+                if (Object.ReferenceEquals(hitWeapon.source.gameObject, weapon.source.gameObject))
                 {
                     return false;
                 }
-                else if (hitShip.transform.TryGetComponent<AIStateManager>(out AIStateManager ai))
-                {
-                    return false;
-                }
+            }
+            else if (hit.transform.TryGetComponent<AIStateManager>(out AIStateManager ai))
+            {
+                return false;
             }
         }
 

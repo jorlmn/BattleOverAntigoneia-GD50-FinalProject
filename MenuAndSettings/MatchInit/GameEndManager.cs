@@ -21,6 +21,11 @@ public class GameEndManager : MonoBehaviour
 
     public void OnPlayerDeath()
     {
-        Debug.Log("PLAYER DIED");
+        StateManager.instance.GameStateChange(StateManager.gameStates.gameOverState);
+    }
+
+    public void OnPlayerVictory()
+    {
+        StateManager.instance.GameStateChange(StateManager.gameStates.gameWonState);
     }
 }

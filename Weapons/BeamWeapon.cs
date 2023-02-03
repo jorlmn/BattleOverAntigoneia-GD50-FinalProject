@@ -9,6 +9,7 @@ public class BeamWeapon : Weapon
 
     void Start()
     {
+        source = GetComponentInParent<ShipSystemsManager>().transform;
         beamRenderer = GetComponent<LineRenderer>();
         beamRenderer.enabled = false;
     }

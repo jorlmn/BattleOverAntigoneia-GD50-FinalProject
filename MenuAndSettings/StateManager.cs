@@ -9,6 +9,8 @@ public class StateManager : MonoBehaviour
     [Header("Objects")]
     [SerializeField] Animator matchMenu;
 
+    [SerializeField] Animator matchEndMenu;
+
     [SerializeField] AudioSource mainMenuAudio;
 
     [Header("Components")]
@@ -33,7 +35,6 @@ public class StateManager : MonoBehaviour
         playState,
         pauseState,
         cutsceneState,
-        panelInteractionState,
         gameWonState,
         gameOverState
     }
@@ -48,11 +49,11 @@ public class StateManager : MonoBehaviour
 
     public static AimStates AimState = AimStates.notAiming;
 
-    public void GameStateChange(gameStates state)
+    public void GameStateChange(gameStates enteringState)
     {
-        GameState = state;
+        GameStateExit(GameState);
 
-        GameStateEntry();
+        GameStateEntry(enteringState);
     }
 
     public void AimStateChange(AimStates state)
@@ -62,26 +63,58 @@ public class StateManager : MonoBehaviour
         AimStateEntry();
     }
 
-    private void GameStateEntry()
+    void GameStateEntry(gameStates enteringState)
     {
-        switch (GameState)
+        switch (enteringState)
         {
             case gameStates.playState:
-                matchMenu.SetTrigger("CloseMenu");
-                mainMenuAudio.Play();
-
                 Time.timeScale = 1;
                 break;
             case gameStates.pauseState:
                 matchMenu.SetTrigger("OpenMenu");
                 mainMenuAudio.Play();
 
-                AimStateChange(AimStates.notAiming);
                 Time.timeScale = 0;
+                break;
+
+            case gameStates.gameOverState:
+                matchEndMenu.SetTrigger("GameOver");
+                mainMenuAudio.Play();
+
+                break;
+
+            case gameStates.gameWonState:
+                matchEndMenu.SetTrigger("GameWon");
+                mainMenuAudio.Play();
+
                 break;
         }
 
+        GameState = enteringState;
         cursorComponent.UpdateCursor();
+    }
+
+    void GameStateExit(gameStates exitingState)
+    {
+        switch (exitingState)
+        {
+            case gameStates.playState:
+                AimStateChange(AimStates.notAiming);
+                break;
+
+            case gameStates.pauseState:
+                matchMenu.SetTrigger("CloseMenu");
+                mainMenuAudio.Play();
+                break;
+
+            case gameStates.gameOverState:
+                break;
+
+            case gameStates.gameWonState:
+                break;
+        }
+
+        GameState = exitingState;
     }
 
     private void AimStateEntry()

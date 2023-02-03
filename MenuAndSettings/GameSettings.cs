@@ -22,7 +22,7 @@ public class GameSettings : MonoBehaviour
     }
     [SerializeField] Slider difficultySlider;
     [SerializeField] TextMeshProUGUI difficultySliderText;
-    public static float difficultyModifier = 1f;
+    public static string difficulty = "medium";
 
     [SerializeField] Slider mouseSensitivitySlider;
     [SerializeField] TextMeshProUGUI mouseSensitivitySliderText;
@@ -67,21 +67,21 @@ public class GameSettings : MonoBehaviour
 
     public void PortrayGameSettings()
     {
-        switch (difficultyModifier)
+        switch (difficulty)
         {
-            case 0.5f:
+            case "easy":
                 difficultySliderText.text = "EASY";
                 difficultySlider.value = 0;
                 break;
-            case 1f:
+            case "medium":
                 difficultySliderText.text = "MEDIUM";
                 difficultySlider.value = 1;
                 break;
-            case 1.5f:
+            case "hard":
                 difficultySliderText.text = "HARD";
                 difficultySlider.value = 2;
                 break;
-            case 2f:
+            case "very hard":
                 difficultySliderText.text = "VERY HARD";
                 difficultySlider.value = 3;
                 break;
@@ -97,7 +97,7 @@ public class GameSettings : MonoBehaviour
 
     public void ResetSettings()
     {
-        difficultyModifier = 1f;
+        difficulty = "medium";
 
         Screen.fullScreen = true;
 
@@ -109,16 +109,16 @@ public class GameSettings : MonoBehaviour
         switch ((int)difficultySlider.value)
         {
             case 0:
-                difficultyModifier = 0.5f;
+                difficulty = "easy";
                 break;
             case 1:
-                difficultyModifier = 1f;
+                difficulty = "medium";
                 break;
             case 2:
-                difficultyModifier = 1.5f;
+                difficulty = "hard";
                 break;
             case 3:
-                difficultyModifier = 2f;
+                difficulty = "very hard";
                 break;
         }
 

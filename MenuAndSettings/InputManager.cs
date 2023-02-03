@@ -55,10 +55,6 @@ public class InputManager : MonoBehaviour
             {
                 StateManager.instance.GameStateChange(StateManager.gameStates.pauseState);
             }
-            else if (StateManager.GameState == StateManager.gameStates.panelInteractionState)
-            {
-                StateManager.instance.GameStateChange(StateManager.gameStates.playState);
-            }
             else if (StateManager.GameState == StateManager.gameStates.pauseState)
             {
                 StateManager.instance.GameStateChange(StateManager.gameStates.playState);

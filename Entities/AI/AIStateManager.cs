@@ -9,8 +9,6 @@ public class AIStateManager : MonoBehaviour
     public aiMovementState aiMovementState = aiMovementState.idle;
     public aiFightState aiFightState = aiFightState.idle;
 
-    public AIDataSO aiData;
-
     void Start()
     {
         aiWeapons = GetComponent<AIWeaponsManager>();
