@@ -15,6 +15,7 @@ public class MainMenu : MonoBehaviour
 
     void Start()
     {
+        Cursor.visible = true;
         mainMenu.SetTrigger("OpenMenu");
 
         difficultySlider.onValueChanged.AddListener(delegate { DifficultySliderCheck(); });
@@ -38,11 +39,7 @@ public class MainMenu : MonoBehaviour
                 break;
         }
     }
-
-    public void ShipSelection(int index)
-    {
-        MatchSettings.shipChosenIndex = index;
-    }
+    
     public void Play()
     {
         switch ((int)difficultySlider.value)

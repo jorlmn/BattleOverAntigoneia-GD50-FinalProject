@@ -15,20 +15,10 @@ public class MatchSettings : MonoBehaviour
         if (MatchSettings.instance == null)
         {
             instance = this;
-
-            foreach(AIDataSO aiData in SOReference.instance.difficultyPresets)
-            {
-                if (!difficultyPresets.ContainsKey(aiData.preset))
-                {
-                    difficultyPresets.Add(aiData.preset, aiData);
-                }
-            }
         }
         else if (MatchSettings.instance != this)
         {
             Destroy(gameObject);
         }
     }
-
-
 }

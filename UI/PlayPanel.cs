@@ -60,4 +60,9 @@ public class PlayPanel : MonoBehaviour
                 break;
         }
     }
+
+    public void ShipSelection(int index)
+    {
+        MatchSettings.shipChosenIndex = index;
+    }
 }
