@@ -16,6 +16,8 @@ public class PlayerWeaponsManager : MonoBehaviour
         target = GetComponent<PlayerTarget>();
 
         shipSystems = GetComponent<ShipSystemsManager>();
+
+        SelectWeapon(1);
     }
 
     void Update()

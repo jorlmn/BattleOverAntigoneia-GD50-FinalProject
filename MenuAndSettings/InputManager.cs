@@ -95,11 +95,11 @@ public class InputManager : MonoBehaviour
         }
         else if (Input.GetKeyDown(Keybindings.keyQuickSlot2))
         {
-            playerWeapons.SelectWeapon(2);
+            //playerWeapons.SelectWeapon(2);
         }
         else if (Input.GetKeyDown(Keybindings.keyQuickSlot3))
         {
-            playerWeapons.SelectWeapon(3);
+            //playerWeapons.SelectWeapon(3);
         }
     }
 

@@ -12,7 +12,7 @@ public class AIWeaponsManager : MonoBehaviour
     public Dictionary<Weapon, Transform> weaponTargets = new ();
     public string preferredShipPartTarget = "hull";  
 
-    void Start()
+    IEnumerator Start()
     {
         shipSystems = GetComponent<ShipSystemsManager>();
 
@@ -23,6 +23,9 @@ public class AIWeaponsManager : MonoBehaviour
 
 
         aiStateManager = GetComponent<AIStateManager>();
+
+        yield return new WaitForSeconds(5);
+        StartEngaging();
     }
 
     public void StartEngaging()

@@ -43,6 +43,7 @@ public class CursorManager : MonoBehaviour
                 {
                     cursorImage.sprite = AimCrossHair;
                     Cursor.lockState = CursorLockMode.Confined;
+                    Cursor.visible = false;
                     customCursor.SetActive(true);
                 }
                 else
@@ -59,7 +60,8 @@ public class CursorManager : MonoBehaviour
 
             default:
                 cursorImage.sprite = PanelCursor;
-                customCursor.SetActive(true);
+                customCursor.SetActive(false);
+                Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.Confined;
                 break;
         }

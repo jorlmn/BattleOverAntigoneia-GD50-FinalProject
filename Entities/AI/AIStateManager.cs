@@ -49,20 +49,6 @@ public class AIStateManager : MonoBehaviour
                 break;
         }
     }
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            aiWeapons.StartEngaging();
-
-        }
-        else if (Input.GetKeyDown(KeyCode.L))
-        {
-            aiWeapons.StopEngaging();
-        }
-    }
-
 }
 
 public enum aiMovementState

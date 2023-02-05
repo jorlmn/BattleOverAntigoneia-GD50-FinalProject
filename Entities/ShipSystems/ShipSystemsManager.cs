@@ -68,6 +68,7 @@ public class ShipSystemsManager : MonoBehaviour
         shipWreck.transform.SetPositionAndRotation(transform.position, transform.rotation);
 
         shipWreck.SetActive(true);
+
         gameObject.SetActive(false);
     }
 }
