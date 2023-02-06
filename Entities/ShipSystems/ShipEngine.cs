@@ -64,11 +64,11 @@ public class ShipEngine : MonoBehaviour
         }
     }
 
-    public void TurboOff()
+    public void EngineDisabled()
     {
         currentVelocity = "standard";
+        active = false;
         StopAllCoroutines();
-        StartCoroutine(TurboStandardRecovery());
     }
 
     public void ToggleStealth()

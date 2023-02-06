@@ -65,7 +65,10 @@ public class StateManager : MonoBehaviour
 
     void GameStateEntry(gameStates enteringState)
     {
-        switch (enteringState)
+        GameState = enteringState;
+        cursorComponent.UpdateCursor();
+
+        switch (GameState)
         {
             case gameStates.playState:
                 Time.timeScale = 1;
@@ -73,25 +76,23 @@ public class StateManager : MonoBehaviour
             case gameStates.pauseState:
                 matchMenu.SetTrigger("OpenMenu");
                 mainMenuAudio.Play();
-
                 Time.timeScale = 0;
                 break;
 
             case gameStates.gameOverState:
                 matchEndMenu.SetTrigger("GameOver");
                 mainMenuAudio.Play();
-
+                InputManager.horizontalInput = 0;
+                InputManager.verticalInput = 0;
                 break;
 
             case gameStates.gameWonState:
                 matchEndMenu.SetTrigger("GameWon");
                 mainMenuAudio.Play();
-
+                InputManager.horizontalInput = 0;
+                InputManager.verticalInput = 0;
                 break;
         }
-
-        GameState = enteringState;
-        cursorComponent.UpdateCursor();
     }
 
     void GameStateExit(gameStates exitingState)
@@ -113,8 +114,6 @@ public class StateManager : MonoBehaviour
             case gameStates.gameWonState:
                 break;
         }
-
-        GameState = exitingState;
     }
 
     private void AimStateEntry()

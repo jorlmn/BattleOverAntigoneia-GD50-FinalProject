@@ -42,8 +42,7 @@ public class EngineHealth : Health
             if (currentHealth <= 0)
             {
                 explosionAndSmoke.gameObject.SetActive(true);
-                shipSystems.shipEngine.TurboOff();
-                shipSystems.shipEngine.active = false;
+                shipSystems.shipEngine.EngineDisabled();
             }
         }
 

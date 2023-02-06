@@ -18,6 +18,7 @@ public class ShipSystemsManager : MonoBehaviour
     public delegate void DeathEvent();
 
     public event DeathEvent OnDeath;
+    
     void Awake()
     {
         shipHealth = GetComponent<HullHealth>();

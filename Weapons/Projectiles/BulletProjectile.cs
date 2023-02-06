@@ -27,7 +27,7 @@ public class BulletProjectile : Projectile
             if (hit.transform.gameObject.TryGetComponent<Health>(out Health shipPart))
             {
 
-                    hitHull = shipPart.TakeDamage(Random.Range(projectileData.minDamage, projectileData.maxDamage) * damageModifier);
+                hitHull = shipPart.TakeDamage(Random.Range(projectileData.minDamage, projectileData.maxDamage) * damageModifier);
 
                 if (hitHull == true)
                 {
